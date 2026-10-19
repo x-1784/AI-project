@@ -1,0 +1,16 @@
+# 依赖与构建产物
+node_modules
+.next
+out
+build
+coverage
+playwright-report
+test-results
+
+# 锁文件与自动生成文件
+pnpm-lock.yaml
+next-env.d.ts
+
+# 文档由人工维护，避免格式化产生大面积无关 diff
+*.md
+docs
