@@ -1,4 +1,4 @@
-# 角色 C：工作台、国际化与质量
+# 工作台、国际化与质量（@x-1784）
 
 > 负责人：`@x-1784`（默认建议，可协商调整）  
 > 工作分支：从最新 `dev` 切出的 `feat/workspace-*`、`feat/i18n-*`、`chore/*`、`docs/*`，或你的个人分支  
@@ -23,6 +23,8 @@
 - 项目根配置：`next.config.*`、`tsconfig.json`、ESLint、Prettier、Tailwind、`package.json`、`pnpm-lock.yaml`；
 - `src/app/[locale]/layout.tsx`、`not-found.tsx`、`globals.css`；
 - `src/app/[locale]/chat/**`、`settings/**`（阶段 5）；
+- `src/app/api/health/**`（@Nanami1-1 提供响应契约）；
+- `.env.example`（结构由你维护，AI/数据库变量名由 @Nanami1-1 提出）；
 - `src/components/ui/**`、`layout/**`、`chat/**`、`common/**`；
 - `src/features/chat/**`；
 - `messages/zh-CN.json`、`messages/en.json`；
@@ -38,18 +40,19 @@
 - 阶段 1 的项目初始化与基础设施；
 - next-intl 路由、语言资源、语言切换、Cookie 持久化、SEO 元数据；
 - 基础布局、导航、页脚、错误边界、加载/空状态；
+- `/api/health` 的最小实现（@Nanami1-1 提供响应契约）；
 - AI 对话工作台 UI、消息渲染、复制、停止/重试、空状态；
 - 共享 UI 组件和无障碍规范；
 - 测试基础设施、双语/响应式/可访问性回归；
 - CI、分支保护、PR 流程和发布；
 - 维护 `CLAUDE.md` 和团队文档；
-- 集成 A/B 的成果，解决接口和合并冲突。
+- 集成 @BJSH-1 和 @Nanami1-1 的成果，解决接口和合并冲突。
 
 ### 2.3 你不负责
 
-- 3D shader、粒子、首页视觉编排（A 负责）；
-- AI provider、流式后端、数据库、认证内部实现（B 负责）；
-- 未经协商修改 A/B 的专有目录。
+- 3D shader、粒子、首页视觉编排（@BJSH-1 负责）；
+- AI provider、流式后端、数据库、认证内部实现（@Nanami1-1 负责）；
+- 未经协商修改 @BJSH-1 / @Nanami1-1 的专有目录。
 
 ---
 
@@ -71,7 +74,7 @@
   - [ ] 非法 locale 返回 404；
 - [ ] 建立导航、页脚、语言切换；
 - [ ] 建立错误边界、加载状态、404；
-- [ ] 建立 `/api/health` 的最小实现（与 B 协作）；
+- [ ] 建立 `/api/health` 的最小实现（@Nanami1-1 提供响应契约）；
 - [ ] 编写 `.env.example`、README、启动说明；
 - [ ] 添加 `.gitignore`、`.gitattributes`；
 - [ ] 添加 CI 工作流；
@@ -103,7 +106,7 @@
 - [ ] 历史记录与作品列表；
 - [ ] 文件管理界面；
 - [ ] 错误与未授权状态；
-- [ ] 与 B 的认证/数据库接口联调；
+- [ ] 与 @Nanami1-1 的认证/数据库接口联调；
 - [ ] 权限与数据隔离的前端状态处理（最终权限仍由服务端校验）。
 
 ### 阶段 6：测试、性能与部署
@@ -211,23 +214,23 @@ pnpm build
 ## 8. 接手后的第一批任务
 
 1. 阅读共享文档和本文件；
-2. 确认当前分支和远程状态；
-3. 确认团队分工是否被三人接受；
-4. 合并团队文档 PR；
-5. 配置分支保护和仓库合并策略；
-6. 进入阶段 1：初始化 Next.js 与 i18n；
-7. 用实际命令验证基础设施；
-8. 汇报结果，再推进首页或工作台。
+2. 确认当前分支和远程状态（最新 `dev` 为 `883613b`）；
+3. 完成阶段 1 的本地复验：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 i18n 冒烟；
+4. 合并 Issue #3 的文档修正 PR；
+5. 提交 `/api/health` 小 PR（@Nanami1-1 提供契约）；
+6. CI 恢复并成功运行后，把 `quality` 设为 `dev` 的必需状态检查；
+7. 阶段 1 验收通过后，再推进阶段 2。
 
 ---
 
 ## 9. 不要做
 
 - ❌ 在阶段 1 就生成完整首页或所有业务页面；
-- ❌ 把 A/B 的代码直接大改后合入；
+- ❌ 把 @BJSH-1 / @Nanami1-1 的代码直接大改后合入；
 - ❌ 在组件里硬编码中英文；
 - ❌ 用演示数据冒充真实 AI 或真实数据库；
 - ❌ 跳过 PR 直接推送 `main`/`dev`；
 - ❌ 在 CI 中放真实 AI 密钥；
 - ❌ 为了赶进度省略类型检查、测试或构建；
+- ❌ 在 CI 未成功运行时声称 CI 已通过；
 - ❌ 把“能运行”当成“已完成”。

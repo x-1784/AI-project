@@ -11,22 +11,28 @@
 # 项目规则、文档与共享资源
 /CLAUDE.md @x-1784
 /README.md @x-1784
+/.env.example @x-1784
 /docs/ @x-1784
 /.github/ @x-1784
 /messages/ @x-1784
 
-# 视觉与 3D（角色 A）
+# 视觉与 3D（@BJSH-1）
 /src/components/three/ @BJSH-1
 /src/components/marketing/ @BJSH-1
+# 首页路由（[locale]/page.tsx）；用 * 避免 CODEOWNERS 把方括号解析成字符组
+/src/app/*/page.tsx @BJSH-1
 
-# AI 与后端（角色 B）
+# AI 与后端（@Nanami1-1）
 /src/app/api/ @Nanami1-1
 /src/lib/ai/ @Nanami1-1
 /src/lib/db/ @Nanami1-1
 /src/lib/auth/ @Nanami1-1
 /src/lib/security/ @Nanami1-1
+/prisma/ @Nanami1-1
+/drizzle/ @Nanami1-1
 
-# 工作台、国际化与质量（角色 C）
+# 工作台、国际化与质量（@x-1784）
+# health 是部署探针，由 @x-1784 实现；@Nanami1-1 提供响应契约
 /src/app/api/health/ @x-1784
 /src/components/ui/ @x-1784
 /src/components/layout/ @x-1784

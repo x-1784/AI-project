@@ -2,7 +2,7 @@
 
 **AI Creative Universe** — 将 AI 对话、创意生成、知识处理和个人工作空间融合在一起的沉浸式 AI 创作平台。
 
-> 项目状态：阶段 1（基础设施）。Next.js、next-intl、基础布局、CI 已建立，等待并入 `dev`。
+> 项目状态：阶段 1（基础设施）。脚手架已合入 `dev`（PR #4，`883613b`）；CI `quality` 仍在排队，等待本地复验与文档修正。
 
 ---
 
@@ -49,7 +49,7 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 ```
 
 - 禁止直接推送 `main` 和 `dev`；
-- 功能分支命名：`feat/...`、`fix/...`、`docs/...`、`chore/...`；
+- 功能分支命名：`feat/...`、`fix/...`、`docs/...`、`chore/...`、`refactor/...`；
 - 所有 PR 至少 1 人评审；
 - 功能 PR 使用 Squash Merge；`dev → main` 发布使用 Merge Commit；
 - 合并后删除源分支；
@@ -75,11 +75,12 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 - next-intl 中英文路由，默认 `zh-CN`，根路径跳转 `/zh-CN`；
 - 深空主题设计 token、导航、页脚、语言切换；
 - 双语错误状态、加载状态、404 与 catch-all；
-- 阶段 1 基础设施与 CI；`src/app/api/**` 仍归角色 B，健康检查在其接口阶段补充；
+- 阶段 1 基础设施与 CI；`src/app/api/health/**` 归 @x-1784，@Nanami1-1 提供响应契约；
+- `/api/health` 尚未实现，作为阶段 1 收尾的小 PR；
 - `.env.example`、README、GitHub Actions CI；
-- 开发服务器、lint、typecheck、生产构建均已实际验证。
+- PR #4 描述了本地开发服务器、lint、typecheck 和生产构建验证；CI 尚未成功运行，需在最新 `dev` 上复验。
 
-阶段 2 开始前，首页视觉和 3D 场景仍由角色 A 负责，其他成员不要提前生成完整首页。
+阶段 2 开始前，首页视觉和 3D 场景仍由 @BJSH-1 负责，其他成员不要提前生成完整首页。
 
 ---
 

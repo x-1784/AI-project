@@ -1,6 +1,6 @@
 # NEBULA AI 团队分工与协作说明书
 
-> 版本：2026-10-19  
+> 版本：2026-10-20
 > 适用对象：三名项目成员，以及每位成员使用的 AI 助手  
 > 配套文档：`docs/PROJECT_BRIEF.md`、`docs/AI_ONBOARDING.md`、`CLAUDE.md`
 
@@ -12,15 +12,15 @@
 
 默认建议如下，三人可以根据兴趣和实际能力协商互换；**一旦确定，每个领域必须有唯一负责人**，并在本文件中更新。
 
-| 角色 | 默认负责人 | 负责领域 | 主要目录/文件 | 备份评审 |
+| 分工 | 默认负责人 | 负责领域 | 主要目录/文件 | 备份评审 |
 | --- | --- | --- | --- | --- |
-| A. 视觉与 3D 体验 | `@BJSH-1` | 设计语言、首页、3D 能量核心、动效、响应式视觉、WebGL 降级 | `src/app/[locale]/page.tsx`、`src/components/marketing/**`、`src/components/three/**` | `@x-1784` |
-| B. AI 与后端 | `@Nanami1-1` | AI 服务层、流式接口、校验、限流、数据库、认证、存储、安全 | `src/app/api/**`、`src/lib/ai/**`、`src/lib/db/**`、`src/lib/auth/**`、`src/lib/security/**` | `@x-1784` |
-| C. 工作台、国际化与质量 | `@x-1784` | 项目基础设施、i18n、基础布局、对话工作台、共享 UI、测试、CI、部署、文档与集成 | `src/app/[locale]/layout.tsx`、`src/app/[locale]/chat/**`、`src/components/{ui,layout,chat,common}/**`、`src/features/chat/**`、`messages/**`、`tests/**`、`.github/**`、`docs/**`、根配置 | `@BJSH-1` / `@Nanami1-1` |
+| 视觉与 3D 体验 | `@BJSH-1` | 设计语言、首页、3D 能量核心、动效、响应式视觉、WebGL 降级 | `src/app/[locale]/page.tsx`、`src/components/marketing/**`、`src/components/three/**` | `@x-1784` |
+| AI 与后端 | `@Nanami1-1` | AI 服务层、流式接口、校验、限流、数据库、认证、存储、安全 | `src/app/api/**`（`src/app/api/health/**` 除外）、`src/lib/ai/**`、`src/lib/db/**`、`src/lib/auth/**`、`src/lib/security/**`、`prisma/**`、`drizzle/**` | `@x-1784` |
+| 工作台、国际化与质量 | `@x-1784` | 项目基础设施、i18n、基础布局、对话工作台、共享 UI、测试、CI、部署、文档与集成 | `src/app/[locale]/layout.tsx`、`src/app/[locale]/chat/**`、`src/app/api/health/**`、`src/components/{ui,layout,chat,common}/**`、`src/features/chat/**`、`messages/**`、`tests/**`、`.github/**`、`docs/**`、根配置 | `@BJSH-1` / `@Nanami1-1` |
 
 ### 1.1 角色职责
 
-#### A. 视觉与 3D 体验
+#### 视觉与 3D 体验（@BJSH-1）
 
 - 建立并维护视觉设计 token：颜色、字体、间距、圆角、边框、辉光、层级；
 - 负责首页整体视觉与信息编排；
@@ -31,7 +31,7 @@
 
 不负责：AI 接口、数据库、认证、i18n 路由实现、CI 配置。
 
-#### B. AI 与后端
+#### AI 与后端（@Nanami1-1）
 
 - 负责服务端 AI 调用封装、模型配置和流式响应；
 - 负责 `/api/chat` 等接口的请求校验、超时、取消、错误码和限流；
@@ -41,7 +41,7 @@
 
 不负责：视觉设计、前端页面排版、i18n 文案和 3D shader。
 
-#### C. 工作台、国际化与质量
+#### 工作台、国际化与质量（@x-1784）
 
 - 负责项目基础设施、Next.js 初始化、目录、TypeScript、ESLint、CI；
 - 负责 next-intl 路由、语言资源、语言切换、SEO 元数据；
@@ -56,7 +56,7 @@
 
 - 每个人都要为自己功能写测试；
 - 每个人都要评审别人的 PR，不能只等别人评审自己；
-- 每个人都要维护中英文文案，不得把硬编码文案留给 C 清理；
+- 每个人都要维护中英文文案，不得把硬编码文案留给 @x-1784 清理；
 - 每个人都要遵守密钥和权限规则；
 - 每个人都要在不清楚时先问，而不是猜。
 
@@ -79,7 +79,7 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 | 分支 | 用途 | 规则 |
 | --- | --- | --- |
 | `main` | 可部署的稳定版本 | 禁止直接 push；只接受 `dev → main` 的发布 PR；至少 1 人 approve |
-| `dev` | 日常集成 | 禁止直接 push；所有功能/修复通过 PR 合入；至少 1 人 approve；CI 通过 |
+| `dev` | 日常集成 | 禁止直接 push；所有功能/修复通过 PR 合入；至少 1 人 approve；CI 可用时通过 |
 | 个人分支 | 个人工作区和实验 | 例如 `xzz`；从最新 `dev` 切出，定期同步 `dev` |
 | 功能分支 | 单个任务的短生命周期分支 | `feat/...`、`fix/...`、`docs/...`、`chore/...`；完成后立即开 PR |
 
@@ -100,7 +100,7 @@ refactor/<area>-<short-description>
 - `feat/home-energy-core`
 - `feat/chat-streaming`
 - `fix/i18n-cookie`
-- `docs/team-onboarding`
+- `docs/fix-ownership-and-status`
 
 ### 2.3 同步规则
 
@@ -232,13 +232,14 @@ chore(ci): add lint and typecheck workflow
 
 ## 6. CI 与质量门禁
 
-阶段 1 初始化完成后，在 `.github/workflows/ci.yml` 中添加：
+阶段 1 已添加 `.github/workflows/ci.yml`，当前包含：
 
 - `pnpm install --frozen-lockfile`；
+- `pnpm format:check`；
 - `pnpm lint`；
 - `pnpm typecheck`；
-- `pnpm test`；
-- `pnpm build`。
+- `pnpm build`；
+- `pnpm test` 在 Vitest 接入后加入。
 
 要求：
 
@@ -247,8 +248,7 @@ chore(ci): add lint and typecheck workflow
 - AI 相关测试使用 mock 或明确的集成测试开关；
 - 构建阶段即使没有 AI 密钥也必须能完成；
 - 不在日志中输出密钥、用户内容或内部堆栈。
-
-在 CI 尚未建立前，成员必须本地运行同等检查，并在 PR 中写明实际结果。
+- 当前 Actions 运行仍处于排队状态、尚未成功完成；在 CI 恢复并成功运行前，成员必须在本地运行同等检查，并在 PR 中写明实际结果，**不得声称 CI 已通过**。
 
 ---
 
@@ -282,34 +282,40 @@ Backlog → Ready → In Progress → In Review → Done
 
 ### 8.1 所有权矩阵
 
+> 以下使用 GitHub 名字。角色代号只保留在文档结构中，沟通和 PR 中优先用名字。
+
 | 路径/领域 | 负责人 | 说明 |
 | --- | --- | --- |
-| `src/components/three/**` | A | 3D 场景、shader、粒子、回退 |
-| `src/components/marketing/**` | A | 首页区块 |
-| `src/app/[locale]/page.tsx` | A | 首页组合；C 负责布局和 i18n 接口 |
-| `src/app/api/**` | B | API Route Handlers |
-| `src/lib/ai/**` | B | AI 服务封装 |
-| `src/lib/db/**` | B | 数据库与迁移 |
-| `src/lib/auth/**` | B | 认证与权限 |
-| `src/lib/security/**` | B | 校验、限流、日志 |
-| `src/app/[locale]/layout.tsx` | C | 根布局、导航、页脚 |
-| `src/app/[locale]/chat/**` | C | 对话工作台页面 |
-| `src/components/{ui,layout,chat,common}/**` | C | 共享 UI 与对话组件 |
-| `src/features/chat/**` | C | 对话状态与业务逻辑 |
-| `messages/**` | C | i18n 资源；所有人可提 PR 加 key，C 审核结构 |
-| `tests/**` | C | 测试基础设施；功能测试由功能负责人编写 |
-| `.github/**` | C | CI、模板、CODEOWNERS |
-| `CLAUDE.md`、`README.md`、`docs/**` | C | 项目规则与文档；变更需 PR 和至少 1 人评审 |
-| `package.json`、`pnpm-lock.yaml` | C | 依赖变更需说明理由；A/B 可提出，C 执行或评审 |
-| `next.config.*`、`tsconfig.json`、ESLint/Prettier 配置 | C | 全局配置 |
+| `src/components/three/**` | `@BJSH-1` | 3D 场景、shader、粒子、回退 |
+| `src/components/marketing/**` | `@BJSH-1` | 首页区块 |
+| `src/app/[locale]/page.tsx` | `@BJSH-1` | 首页组合；@x-1784 负责布局和 i18n 接口 |
+| `src/app/api/**`（`health/**` 除外） | `@Nanami1-1` | API Route Handlers |
+| `src/app/api/health/**` | `@x-1784` | 部署探针；@Nanami1-1 提供响应契约 |
+| `src/lib/ai/**` | `@Nanami1-1` | AI 服务封装 |
+| `src/lib/db/**` | `@Nanami1-1` | 数据库与迁移 |
+| `src/lib/auth/**` | `@Nanami1-1` | 认证与权限 |
+| `src/lib/security/**` | `@Nanami1-1` | 校验、限流、日志 |
+| `prisma/**`、`drizzle/**` | `@Nanami1-1` | 数据库 schema 与迁移（阶段 5） |
+| `src/app/[locale]/layout.tsx` | `@x-1784` | 根布局、导航、页脚 |
+| `src/app/[locale]/chat/**` | `@x-1784` | 对话工作台页面 |
+| `src/components/{ui,layout,chat,common}/**` | `@x-1784` | 共享 UI 与对话组件 |
+| `src/features/chat/**` | `@x-1784` | 对话状态与业务逻辑 |
+| `messages/**` | `@x-1784` | i18n 资源；所有人可提 PR 加 key，@x-1784 审核结构 |
+| `tests/**` | `@x-1784` | 测试基础设施；功能测试由功能负责人编写 |
+| `.github/**` | `@x-1784` | CI、模板、CODEOWNERS |
+| `.env.example` | `@x-1784` | 仅变量名与占位；AI/数据库变量名由 @Nanami1-1 提出 |
+| `CLAUDE.md`、`README.md`、`docs/**` | `@x-1784` | 项目规则与文档；变更需 PR 和至少 1 人评审 |
+| `package.json`、`pnpm-lock.yaml` | `@x-1784` | 依赖变更需说明理由；@BJSH-1 / @Nanami1-1 可提出，@x-1784 执行或评审 |
+| `next.config.*`、`tsconfig.json`、ESLint/Prettier 配置 | `@x-1784` | 全局配置 |
 
 ### 8.2 共享文件规则
 
 - 修改别人负责的目录前，先在 Issue/PR 中说明原因并 @ 负责人；
-- 修改 `package.json`、`CLAUDE.md`、`messages` 结构、全局配置，必须由 C 评审；
+- 修改 `package.json`、`CLAUDE.md`、`messages` 结构、全局配置，必须由 @x-1784 评审；
 - 不因为格式化或重命名制造大面积无关 diff；
 - 发现别人代码的问题，优先开 Issue 或提出建议，不要直接大改；
-- 跨领域功能由负责人共同设计接口，再各自实现。
+- 跨领域功能由负责人共同设计接口，再各自实现；
+- “Require review from Code Owners”当前保持关闭；等 `CLAUDE.md`、`docs/`、`.github/` 至少有两个共同 owner 后再启用。
 
 ---
 
