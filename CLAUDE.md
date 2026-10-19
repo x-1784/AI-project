@@ -2,7 +2,7 @@
 
 > 本文件是本项目内 AI Agent 的最高优先级开发指令。
 > 在本仓库中开始任何工作前，必须先阅读并遵守本文件。
-> 最后更新：2026-10-19（阶段 0）
+> 最后更新：2026-10-19（阶段 1）
 
 ---
 
@@ -27,15 +27,15 @@
 
 ## 2. 当前阶段与阶段门禁
 
-**当前阶段：阶段 0（项目审查与技术规划）→ 阶段 1 过渡。**
+**当前阶段：阶段 1（项目基础设施），脚手架已通过本地验证，等待 PR 合入 `dev`。**
 
-> 2026-10-19 更新：远程仓库、团队分工和 AI 接手文档已建立；应用代码尚未初始化，阶段 1 需用户确认后开始。
+> 2026-10-19 更新：团队文档已合入 `dev`（PR #1）；Next.js `16.4.2` + TypeScript + Tailwind CSS 4 + next-intl `4.14.9` 脚手架、基础布局、双语路由、错误/加载/404 与 CI 已建立并完成本地验证。
 
 阶段门禁规则：
 
 - 阶段 0 只允许分析、只读检查和编写规划；**不得创建业务代码、安装依赖或初始化项目**。
 - 本文件 `CLAUDE.md` 已获得用户明确授权创建，是阶段 0 的唯一例外。
-- 用户确认阶段 0 规划后，才能进入阶段 1。
+- 用户确认阶段 0 规划后，才能进入阶段 1（已确认，阶段 1 进行中）。
 - 每次只推进一个阶段；完成一个阶段后必须汇报并等待确认，不得自动跨阶段。
 - 任何阶段都不得删除、覆盖或重置已有重要工作。
 
@@ -116,8 +116,10 @@
 
 - 安装时使用互相兼容的稳定版本，并在 `package.json` 中锁定版本。
 - 不盲目采用刚发布的大版本；安装前核对 peerDependencies 与官方迁移说明。
-- 当前只读查询结果仅作参考，例如 Next.js 16.x、React 19.x、next-intl 4.x、Tailwind 4.x、R3F 9.x。
-- Next.js 16 对 `middleware` / `proxy` 的命名和约定可能变化；国际化集成方式必须以**所安装版本的官方文档**为准，不凭记忆实现。
+- 已锁定版本（阶段 1）：Next.js `16.4.2`、React / React DOM `19.3.0`、next-intl `4.14.9`、Tailwind CSS `4.3.3`、TypeScript `5.9.3`、Prettier `3.9.10`。
+- Next.js 16 使用 `src/proxy.ts`（原 `middleware.ts`）；本项目国际化入口在 `src/proxy.ts`，不要同时创建 `middleware.ts`。
+- Next.js 16 默认启用 Cache Components 与 Partial Prefetching；页面读取 `new Date()`、`usePathname()` 等运行时数据时，按官方提示使用 Suspense、`"use cache"` 或 `instant = false`。
+- 3D 依赖（Three.js / R3F / Drei）在阶段 2 由角色 A 引入，届时核对与 React 19 的兼容版本。
 - pnpm 可能会拦截依赖的构建脚本；如 `sharp`、`@tailwindcss/oxide` 等需要构建，使用 `pnpm approve-builds` 并记录原因。
 
 ---
@@ -141,15 +143,18 @@ webdev/
 │  │  ├─ [locale]/
 │  │  │  ├─ layout.tsx
 │  │  │  ├─ page.tsx
-│  │  │  ├─ chat/
+│  │  │  ├─ loading.tsx
+│  │  │  ├─ error.tsx
+│  │  │  ├─ not-found.tsx
+│  │  │  ├─ [...rest]/         # 未知路由统一 404
 │  │  │  │  └─ page.tsx
-│  │  │  ├─ settings/          # 阶段 5
-│  │  │  └─ not-found.tsx
+│  │  │  ├─ chat/              # 阶段 3
+│  │  │  └─ settings/          # 阶段 5
 │  │  ├─ api/
 │  │  │  ├─ chat/route.ts
 │  │  │  └─ health/route.ts
 │  │  ├─ globals.css
-│  │  └─ layout.tsx
+│  │  └─ icon.svg
 │  ├─ components/
 │  │  ├─ ui/                  # shadcn/ui 基础组件
 │  │  ├─ layout/              # 导航、页脚、语言切换
@@ -160,9 +165,10 @@ webdev/
 │  ├─ features/
 │  │  ├─ chat/                # 对话状态、hooks、类型
 │  │  └─ creations/           # 后续创作模块
+│  ├─ i18n/                   # locale 配置、请求配置、导航封装
+│  ├─ proxy.ts                # Next.js 16 国际化代理
 │  ├─ lib/
 │  │  ├─ ai/                  # 服务端 AI 封装
-│  │  ├─ i18n/                # locale 配置、导航封装
 │  │  ├─ db/                  # Prisma 客户端与数据访问（阶段 5）
 │  │  ├─ auth/                # 认证与权限（阶段 5）
 │  │  ├─ security/            # 限流、校验、日志
@@ -193,6 +199,7 @@ webdev/
 - 根路径 `/` 重定向到 `/zh-CN`，不得出现重定向循环。
 - 关闭基于 `Accept-Language` 的自动语言检测；默认中文规则优先。
 - 用户显式切换语言后写入语言 Cookie（如 `NEXT_LOCALE`），后续访问恢复该选择。
+- Next.js 16 使用 `src/proxy.ts`（原 `middleware.ts`）；本项目在代理中只恢复用户显式选择过的 Cookie，不读取 `Accept-Language`。
 - 非法的 locale 段返回 404，不得静默渲染。
 
 ### 6.2 文案管理
@@ -335,16 +342,18 @@ AI_MAX_OUTPUT_TOKENS=
 
 ## 11. 质量门禁
 
-### 11.1 常用命令（阶段 1 初始化后确认）
+### 11.1 常用命令（阶段 1 已配置）
 
 ```bash
 pnpm dev
+pnpm format:check
 pnpm lint
-pnpm typecheck
-pnpm test
-pnpm test:e2e
+pnpm typecheck   # 自动执行 next typegen
 pnpm build
+pnpm start
 ```
+
+`pnpm test` 与 `pnpm test:e2e` 将在引入 Vitest/Playwright 后启用；在此之前 CI 执行 format check、lint、typecheck 和 build。
 
 ### 11.2 每个阶段的验证要求
 
@@ -397,7 +406,7 @@ pnpm build
 
 ---
 
-## 13. 环境信息（阶段 0 只读检查）
+## 13. 环境信息（阶段 1）
 
 - 工作目录：`D:\codeProject\webdev`
 - 操作系统：Windows 11
@@ -407,8 +416,9 @@ pnpm build
 - pnpm：`11.22.0`
 - Git：`2.55.0`
 - npm registry：`https://registry.npmmirror.com`
-- 当前目录为空，尚未初始化 Git 仓库。
-- 尚未安装项目依赖；阶段 1 经确认后再初始化。
+- Git 仓库已初始化并克隆到该目录；阶段 1 工作分支为 `chore/phase1-scaffold`。
+- 依赖已安装，锁文件为 `pnpm-lock.yaml`；`pnpm-workspace.yaml` 已放行 `@parcel/watcher` 与 `@swc/core` 的构建脚本（next-intl 工具链需要）。
+- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`。
 
 环境注意事项：
 
@@ -450,8 +460,8 @@ pnpm build
 - 默认分支：`main`
 - 集成分支：`dev`
 - 协作者：`@x-1784`（admin）、`@BJSH-1`（write）、`@Nanami1-1`（write）
-- 当前文档工作分支：`docs/team-onboarding`，通过 PR 合入 `dev`
-- 应用代码尚未初始化，阶段 1 仍需用户确认
+- 团队文档已通过 PR #1 合入 `dev`（2026-10-19）
+- 阶段 1 工作分支：`chore/phase1-scaffold`，等待 PR 评审合入 `dev`
 
 ### 16.2 团队分工（默认建议，可协商互换）
 
@@ -485,7 +495,7 @@ pnpm build
   - 均要求 PR、至少 1 个 approve、解决全部 review conversation；
   - `dev` 要求线性历史（Squash Merge），`main` 允许发布时使用 Merge Commit；
   - 管理员暂未被强制限制，但仅允许在紧急情况下绕过，并必须在 PR/Issue 中说明原因；
-  - CI 状态检查将在阶段 1 添加工作流后启用。
+  - CI 工作流已随阶段 1 PR 添加，合并后在 `dev` 分支保护中设为必需状态检查。
 
 ### 16.4 共享文件与所有权
 
@@ -519,10 +529,10 @@ pnpm build
 
 ### 16.6 当前落地顺序
 
-1. 合并团队文档 PR 到 `dev`；
-2. 三人确认分工；
+1. ✅ 合并团队文档 PR 到 `dev`（2026-10-19，PR #1，`@Nanami1-1` approve）；
+2. 三人最终确认分工（PR #1 已由 `@Nanami1-1` 通过评审）；
 3. ✅ 已配置 `main`/`dev` 分支保护与仓库合并策略（2026-10-19）；
-4. 进入阶段 1：初始化 Next.js、i18n、基础布局、CI；
+4. 🚧 阶段 1：Next.js、i18n、基础布局、CI 已完成并通过本地验证，等待 PR 合入 `dev`；
 5. 阶段 1 添加 CI 后，把 lint/typecheck/test/build 设为 `dev` 的必需状态检查；
 6. 之后才进入阶段 2 首页与 3D。
 
@@ -551,3 +561,4 @@ pnpm build
 - 其他 AI 在此期间只做准备：阅读文档、提出设计 token、API 契约、3D 方案、测试策略；
 - 不允许三套 AI 并行创建项目、并行安装依赖或并行修改根配置；
 - 脚手架合入后，各角色再从最新 `dev` 切出自己的功能分支。
+- 当前阶段 1 的单写者为协调 AI（Claude Code），工作分支 `chore/phase1-scaffold`；脚手架合入 `dev` 后恢复常规角色分工。

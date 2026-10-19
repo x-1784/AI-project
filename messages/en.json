@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "title": "NEBULA AI — AI Creative Universe",
+    "description": "NEBULA AI brings AI conversation, creative generation, knowledge processing, and a personal workspace into one immersive creative platform."
+  },
+  "Navigation": {
+    "brand": "NEBULA AI",
+    "mainLabel": "Main navigation",
+    "home": "Home",
+    "skipToContent": "Skip to main content"
+  },
+  "LocaleSwitcher": {
+    "label": "Switch language",
+    "switchTo": "中文"
+  },
+  "Home": {
+    "badge": "AI CREATIVE UNIVERSE",
+    "title": "Take your ideas to the next dimension",
+    "subtitle": "AI conversation, creative generation, knowledge processing, and a personal workspace—united in one immersive creative universe.",
+    "status": "The foundation is ready. The homepage experience and AI workspace will roll out in the next phases."
+  },
+  "Footer": {
+    "rights": "© NEBULA AI",
+    "note": "Deep-space aesthetics · Built for creators"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has moved.",
+    "backHome": "Back to home"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "description": "The page failed to load. Please try again.",
+    "retry": "Try again"
+  },
+  "Loading": {
+    "label": "Loading…"
+  }
+}

@@ -1,0 +1,6 @@
+allowBuilds:
+  # next-intl 的提取工具链依赖，需要执行原生构建脚本
+  "@parcel/watcher": true
+  "@swc/core": true
+  sharp: false
+  unrs-resolver: false

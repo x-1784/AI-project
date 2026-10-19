@@ -2,7 +2,7 @@
 
 **AI Creative Universe** — 将 AI 对话、创意生成、知识处理和个人工作空间融合在一起的沉浸式 AI 创作平台。
 
-> 项目状态：阶段 0 → 阶段 1 过渡期。团队分工与 AI 接手文档已就绪，应用代码尚未初始化。
+> 项目状态：阶段 1（基础设施）。Next.js、next-intl、基础布局、CI 已建立，等待并入 `dev`。
 
 ---
 
@@ -60,8 +60,8 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 ## 当前阶段
 
 ```text
-阶段 0 规划与团队接手      ← 当前
-阶段 1 基础设施
+阶段 0 规划与团队接手      ← 已完成
+阶段 1 基础设施            ← 当前
 阶段 2 首页与 3D
 阶段 3 AI 工作台 UI
 阶段 4 真实 AI 服务
@@ -69,15 +69,17 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 阶段 6 测试、性能与部署
 ```
 
-阶段 1 将包含：
+阶段 1 已建立：
 
-- Next.js App Router + TypeScript + Tailwind 初始化；
-- next-intl 中英文路由，默认 `zh-CN`；
-- 设计 token、基础布局、错误边界；
-- `.env.example`、README、CI、分支保护；
-- 开发服务器、类型检查、lint、生产构建验证。
+- Next.js 16 App Router + TypeScript + Tailwind CSS 4；
+- next-intl 中英文路由，默认 `zh-CN`，根路径跳转 `/zh-CN`；
+- 深空主题设计 token、导航、页脚、语言切换；
+- 双语错误状态、加载状态、404 与 catch-all；
+- 阶段 1 基础设施与 CI；`src/app/api/**` 仍归角色 B，健康检查在其接口阶段补充；
+- `.env.example`、README、GitHub Actions CI；
+- 开发服务器、lint、typecheck、生产构建均已实际验证。
 
-**在阶段 1 获得确认前，不要批量生成业务页面。**
+阶段 2 开始前，首页视觉和 3D 场景仍由角色 A 负责，其他成员不要提前生成完整首页。
 
 ---
 
@@ -93,14 +95,34 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 
 ## 本地开发
 
-待阶段 1 初始化后补充：
+环境要求：Node.js `>=20.9`（本项目使用 `24.x`）、pnpm `11.x`。
 
 ```bash
 pnpm install
-pnpm dev
+pnpm dev            # http://localhost:3000
+pnpm format:check
 pnpm lint
-pnpm typecheck
+pnpm typecheck      # 自动执行 next typegen
 pnpm build
+pnpm start          # 生产模式预览
 ```
 
-> 目前仓库尚未初始化 Next.js，上述命令尚不可用。
+环境变量：
+
+```bash
+cp .env.example .env.local
+```
+
+阶段 1 不依赖任何密钥；`AI_*` 变量在阶段 4 接入真实服务时填写，`NEXT_PUBLIC_SITE_URL` 用于 SEO 元数据的绝对地址，生产环境必须设置为正式域名。
+
+国际化路由：
+
+```text
+/           → /zh-CN（默认中文）
+/zh-CN/...  → 中文
+/en/...     → English
+```
+
+用户显式切换语言后写入 `NEXT_LOCALE` Cookie；根路径会恢复该选择，但不会跟随浏览器 `Accept-Language`。
+
+> 阶段 1 尚未引入 Vitest/Playwright；测试与 E2E 将在后续阶段按 `CLAUDE.md` 的质量门禁补充，CI 目前执行 format check、lint、typecheck 和 build。

@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "title": "NEBULA AI — AI 创意宇宙",
+    "description": "NEBULA AI 将 AI 对话、创意生成、知识处理与个人工作空间融合在同一个沉浸式创作平台中。"
+  },
+  "Navigation": {
+    "brand": "NEBULA AI",
+    "mainLabel": "主导航",
+    "home": "首页",
+    "skipToContent": "跳到主要内容"
+  },
+  "LocaleSwitcher": {
+    "label": "切换语言",
+    "switchTo": "EN"
+  },
+  "Home": {
+    "badge": "AI CREATIVE UNIVERSE",
+    "title": "让创意进入下一个维度",
+    "subtitle": "将 AI 对话、创意生成、知识处理和个人工作空间，融合进同一个沉浸式创作宇宙。",
+    "status": "基础框架已就绪。首页视觉与 AI 工作台将在后续阶段逐步开放。"
+  },
+  "Footer": {
+    "rights": "© NEBULA AI",
+    "note": "深空美学 · 为创作者而生"
+  },
+  "NotFound": {
+    "title": "页面不存在",
+    "description": "你访问的页面不存在或已被移动。",
+    "backHome": "返回首页"
+  },
+  "Error": {
+    "title": "出现了一点问题",
+    "description": "页面加载失败，请稍后重试。",
+    "retry": "重试"
+  },
+  "Loading": {
+    "label": "正在加载…"
+  }
+}
