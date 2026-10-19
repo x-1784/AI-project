@@ -480,6 +480,12 @@ pnpm build
 - 不对共享分支强制推送；不对 `main`/`dev` 做历史重写。
 - 功能分支命名：`feat/...`、`fix/...`、`docs/...`、`chore/...`、`refactor/...`。
 - 日常任务优先使用短生命周期功能分支；个人分支必须定期同步 `dev`。
+- 已配置远程保护（2026-10-19）：
+  - `main` 与 `dev` 均禁止直接推送、强制推送和删除；
+  - 均要求 PR、至少 1 个 approve、解决全部 review conversation；
+  - `dev` 要求线性历史（Squash Merge），`main` 允许发布时使用 Merge Commit；
+  - 管理员暂未被强制限制，但仅允许在紧急情况下绕过，并必须在 PR/Issue 中说明原因；
+  - CI 状态检查将在阶段 1 添加工作流后启用。
 
 ### 16.4 共享文件与所有权
 
@@ -515,8 +521,9 @@ pnpm build
 
 1. 合并团队文档 PR 到 `dev`；
 2. 三人确认分工；
-3. 配置 `main`/`dev` 分支保护与仓库合并策略；
+3. ✅ 已配置 `main`/`dev` 分支保护与仓库合并策略（2026-10-19）；
 4. 进入阶段 1：初始化 Next.js、i18n、基础布局、CI；
-5. 之后才进入阶段 2 首页与 3D。
+5. 阶段 1 添加 CI 后，把 lint/typecheck/test/build 设为 `dev` 的必需状态检查；
+6. 之后才进入阶段 2 首页与 3D。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。
