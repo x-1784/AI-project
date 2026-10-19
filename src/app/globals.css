@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* ============================================================
+   NEBULA AI · 设计变量
+   角色 A 维护视觉部分；新增 token 前请与 C 协调命名
+   ============================================================ */
+
+@theme {
+  /* 背景阶梯：不用纯黑，纯黑会让辉光发灰、玻璃层次失效 */
+  --color-nx-void: #04050a;
+  --color-nx-abyss: #070a12;
+  --color-nx-deep: #0b0f1a;
+  --color-nx-shelf: #111726;
+
+  /* 文字层级 */
+  --color-nx-ink: #ecf0f8;
+  --color-nx-ink-2: #a5afc2;
+  --color-nx-ink-3: #6a748a;
+  --color-nx-ink-4: #434c5e;
+
+  /* 强调：紫不进 UI 层，只做核心外缘与渐变末端 */
+  --color-nx-electric: #4b8cff;
+  --color-nx-electric-deep: #2b5fd9;
+  --color-nx-nebula: #8b5cf6;
+  --color-nx-ion: #6fe3ff;
+
+  --font-display: var(--font-space-grotesk), "PingFang SC", "HarmonyOS Sans SC",
+    "Microsoft YaHei", sans-serif;
+  --font-ui: var(--font-inter), "PingFang SC", "HarmonyOS Sans SC",
+    "Microsoft YaHei", sans-serif;
+  --font-cjk: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei",
+    "Source Han Sans SC", sans-serif;
+  /* 等宽字体暂用系统栈，避免为几行代码引入一个字体包 */
+  --font-mono: ui-monospace, "Cascadia Code", "JetBrains Mono", monospace;
+}
+
+:root {
+  --nx-glass: rgba(14, 19, 32, 0.55);
+  --nx-line-hair: rgba(255, 255, 255, 0.06);
+  --nx-line-base: rgba(255, 255, 255, 0.1);
+  --nx-line-strong: rgba(255, 255, 255, 0.18);
+  --nx-glow-core: 0 0 120px -30px rgba(75, 140, 255, 0.5);
+  --nx-glow-nebula: 0 0 90px -30px rgba(139, 92, 246, 0.4);
+
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--color-nx-void);
+  color: var(--color-nx-ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 中文不吃负字距：负 letter-spacing 是给拉丁字母收紧用的，
+   中文用会挤成一团；行高反过来要比拉丁松一点（汉字是满字面）。 */
+:lang(zh-CN) .nx-display,
+:lang(zh-CN) .nx-h1,
+:lang(zh-CN) .nx-h2 {
+  letter-spacing: 0;
+  line-height: 1.06;
+  font-family: var(--font-cjk);
+}
+
+/* 焦点可见：所有交互元素统一焦点环 */
+:where(a, button, [role="button"], input, textarea):focus-visible {
+  outline: 2px solid var(--color-nx-electric);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* 3D 就绪后淡入，替换首帧的静态轮廓 */
+@keyframes nx-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

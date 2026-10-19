@@ -1,0 +1,13 @@
+# pnpm 10+ 的项目级配置写在这里（.npmrc 里的同名项已不再生效）。
+#
+# nodeLinker: hoisted
+#   pnpm 默认用 node_modules/.pnpm + 符号链接组织依赖。在 Windows 上
+#   （未开"开发者模式"、或组策略/安全软件限制 symlink 时）链接会静默失败：
+#   node_modules 顶层变成空壳，`tsc` 报大量 "Cannot find module 'next'/'react'"，
+#   而 `pnpm install` 仍回 "Already up to date" 不修复。
+#   hoisted 改为放置实体目录，绕开符号链接。代价只是 node_modules 体积变大。
+nodeLinker: hoisted
+
+allowBuilds:
+  sharp: false
+  unrs-resolver: false

@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "Home",
+    "workspace": "Workspace",
+    "capabilities": "Capabilities",
+    "langLabel": "Switch language"
+  },
+  "hero": {
+    "eyebrow": "AI Creative Universe",
+    "titleLine1": "Launch your",
+    "titleLine2": "ideas into orbit",
+    "lead": "Hand NEBULA a single sentence — from first spark to finished work.",
+    "composerPlaceholder": "Describe what you want to create…",
+    "composerHint": "to talk to NEBULA",
+    "send": "Send",
+    "quickLabel": "Quick",
+    "quickWriting": "Long-form writing",
+    "quickSummarize": "Summarize docs",
+    "quickCode": "Generate code",
+    "quickImage": "Image concepts"
+  },
+  "core": {
+    "ariaLabel": "NEBULA energy core",
+    "fallbackLabel": "Static fallback for the energy core"
+  }
+}

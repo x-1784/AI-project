@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "首页",
+    "workspace": "工作台",
+    "capabilities": "能力",
+    "langLabel": "切换语言"
+  },
+  "hero": {
+    "eyebrow": "AI 创作宇宙",
+    "titleLine1": "把想法",
+    "titleLine2": "发射出去",
+    "lead": "一句话交给 NEBULA，从最初的念头，到可以交付的成稿。",
+    "composerPlaceholder": "描述你想创作的东西…",
+    "composerHint": "与 NEBULA 对话",
+    "send": "发送",
+    "quickLabel": "常用",
+    "quickWriting": "长文写作",
+    "quickSummarize": "资料总结",
+    "quickCode": "代码生成",
+    "quickImage": "图像构思"
+  },
+  "core": {
+    "ariaLabel": "NEBULA 能量核心",
+    "fallbackLabel": "能量核心静态回退图"
+  }
+}
