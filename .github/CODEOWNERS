@@ -1,0 +1,37 @@
+# NEBULA AI CODEOWNERS
+#
+# 说明：
+# - CODEOWNERS 在启用 “Require review from Code Owners” 后才会强制生效。
+# - 当前作为分工提示，默认由项目协调人兜底。
+# - 角色调整后，请同步更新本文件、docs/roles/README.md、docs/TEAM_PLAYBOOK.md 和 CLAUDE.md。
+
+# 默认兜底
+* @x-1784
+
+# 项目规则、文档与共享资源
+/CLAUDE.md @x-1784
+/README.md @x-1784
+/docs/ @x-1784
+/.github/ @x-1784
+/messages/ @x-1784
+
+# 视觉与 3D（角色 A）
+/src/components/three/ @BJSH-1
+/src/components/marketing/ @BJSH-1
+
+# AI 与后端（角色 B）
+/src/app/api/ @Nanami1-1
+/src/lib/ai/ @Nanami1-1
+/src/lib/db/ @Nanami1-1
+/src/lib/auth/ @Nanami1-1
+/src/lib/security/ @Nanami1-1
+
+# 工作台、国际化与质量（角色 C）
+/src/app/api/health/ @x-1784
+/src/components/ui/ @x-1784
+/src/components/layout/ @x-1784
+/src/components/chat/ @x-1784
+/src/components/common/ @x-1784
+/src/features/chat/ @x-1784
+/src/lib/i18n/ @x-1784
+/tests/ @x-1784
