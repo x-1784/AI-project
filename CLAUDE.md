@@ -2,7 +2,7 @@
 
 > 本文件是本项目内 AI Agent 的最高优先级开发指令。
 > 在本仓库中开始任何工作前，必须先阅读并遵守本文件。
-> 最后更新：2026-10-19（阶段 1）
+> 最后更新：2026-10-20（阶段 1 文档修正）
 
 ---
 
@@ -27,9 +27,9 @@
 
 ## 2. 当前阶段与阶段门禁
 
-**当前阶段：阶段 1（项目基础设施），脚手架已通过本地验证，等待 PR 合入 `dev`。**
+**当前阶段：阶段 1（项目基础设施），脚手架已合入 `dev`（PR #4，`883613b`），CI 尚未成功运行，等待本地复验与文档修正。**
 
-> 2026-10-19 更新：团队文档已合入 `dev`（PR #1）；Next.js `16.4.2` + TypeScript + Tailwind CSS 4 + next-intl `4.14.9` 脚手架、基础布局、双语路由、错误/加载/404 与 CI 已建立并完成本地验证。
+> 2026-10-20 更新：团队文档已合入 `dev`（PR #1）；阶段 1 脚手架已合入 `dev`（PR #4，`883613b`）。GitHub Actions 的 `quality` 工作流仍处于排队状态，**CI 结果不能视为通过**；需完成本地复验、文档修正和 CI 恢复后再确认阶段 1 验收。
 
 阶段门禁规则：
 
@@ -119,7 +119,7 @@
 - 已锁定版本（阶段 1）：Next.js `16.4.2`、React / React DOM `19.3.0`、next-intl `4.14.9`、Tailwind CSS `4.3.3`、TypeScript `5.9.3`、Prettier `3.9.10`。
 - Next.js 16 使用 `src/proxy.ts`（原 `middleware.ts`）；本项目国际化入口在 `src/proxy.ts`，不要同时创建 `middleware.ts`。
 - Next.js 16 默认启用 Cache Components 与 Partial Prefetching；页面读取 `new Date()`、`usePathname()` 等运行时数据时，按官方提示使用 Suspense、`"use cache"` 或 `instant = false`。
-- 3D 依赖（Three.js / R3F / Drei）在阶段 2 由角色 A 引入，届时核对与 React 19 的兼容版本。
+- 3D 依赖（Three.js / R3F / Drei）在阶段 2 由 @BJSH-1 引入，届时核对与 React 19 的兼容版本。
 - pnpm 可能会拦截依赖的构建脚本；如 `sharp`、`@tailwindcss/oxide` 等需要构建，使用 `pnpm approve-builds` 并记录原因。
 
 ---
@@ -175,6 +175,7 @@ webdev/
 │  │  └─ utils/
 │  ├─ config/                 # 站点配置、导航、功能开关
 │  └─ types/                  # 共享类型
+├─ prisma/                    # 数据库 schema 与迁移（阶段 5；若选 Drizzle 则使用 drizzle/）
 ├─ tests/
 │  ├─ unit/
 │  └─ e2e/
@@ -408,17 +409,17 @@ pnpm start
 
 ## 13. 环境信息（阶段 1）
 
-- 工作目录：`D:\codeProject\webdev`
+- 工作目录：仓库根目录（不同成员的本地路径不同，不要在文档中写死）
 - 操作系统：Windows 11
 - 主 Shell：PowerShell；Git Bash 可用
 - Node.js：`v24.18.0`（Next.js 要求 `>=20.9.0`，满足）
 - npm：`11.16.0`
-- pnpm：`11.22.0`
+- pnpm：`11.22.0`（与 `package.json` 的 `packageManager` 一致；以 `pnpm -v` 实测为准）
 - Git：`2.55.0`
 - npm registry：`https://registry.npmmirror.com`
-- Git 仓库已初始化并克隆到该目录；阶段 1 工作分支为 `chore/phase1-scaffold`。
-- 依赖已安装，锁文件为 `pnpm-lock.yaml`；`pnpm-workspace.yaml` 已放行 `@parcel/watcher` 与 `@swc/core` 的构建脚本（next-intl 工具链需要）。
-- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`。
+- Git 仓库已初始化并关联远程；阶段 1 脚手架已合入 `dev`（`883613b`）。
+- 本地依赖通过 `pnpm install` 安装，锁文件为 `pnpm-lock.yaml`；`pnpm-workspace.yaml` 已放行 `@parcel/watcher` 与 `@swc/core` 的构建脚本（next-intl 工具链需要）。
+- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI 尚未成功运行。
 
 环境注意事项：
 
@@ -451,7 +452,7 @@ pnpm start
 
 ---
 
-## 16. 团队协作与远程仓库（2026-10-19 更新）
+## 16. 团队协作与远程仓库（2026-10-20 更新）
 
 ### 16.1 远程仓库
 
@@ -461,15 +462,18 @@ pnpm start
 - 集成分支：`dev`
 - 协作者：`@x-1784`（admin）、`@BJSH-1`（write）、`@Nanami1-1`（write）
 - 团队文档已通过 PR #1 合入 `dev`（2026-10-19）
-- 阶段 1 工作分支：`chore/phase1-scaffold`，等待 PR 评审合入 `dev`
+- 阶段 1 脚手架已通过 PR #4 合入 `dev`（2026-10-19，合并提交 `883613b`）；源分支已删除
+- 当前文档修正工作分支：`docs/fix-ownership-and-status`，目标分支 `dev`
 
 ### 16.2 团队分工（默认建议，可协商互换）
 
-| 角色 | 负责人 | 负责领域 | 角色文档 |
+| 分工 | 负责人 | 负责领域 | 角色文档 |
 | --- | --- | --- | --- |
-| A. 视觉与 3D 体验 | `@BJSH-1` | 设计语言、首页、3D 能量核心、动效、响应式视觉、WebGL 降级 | `docs/roles/VISUAL_3D.md` |
-| B. AI 与后端 | `@Nanami1-1` | AI 服务、流式接口、校验、限流、数据库、认证、存储、安全 | `docs/roles/AI_BACKEND.md` |
-| C. 工作台、国际化与质量 | `@x-1784` | 基础设施、i18n、基础布局、对话工作台、共享 UI、测试、CI、部署、文档与集成 | `docs/roles/WORKSPACE_PLATFORM.md` |
+| 视觉与 3D 体验 | `@BJSH-1` | 设计语言、首页、3D 能量核心、动效、响应式视觉、WebGL 降级 | `docs/roles/VISUAL_3D.md` |
+| AI 与后端 | `@Nanami1-1` | AI 服务、流式接口、校验、限流、数据库、认证、存储、安全 | `docs/roles/AI_BACKEND.md` |
+| 工作台、国际化与质量 | `@x-1784` | 基础设施、i18n、基础布局、对话工作台、共享 UI、测试、CI、部署、文档与集成 | `docs/roles/WORKSPACE_PLATFORM.md` |
+
+> 沟通、Issue、PR 中优先使用 GitHub 名字。
 
 每个领域必须有唯一负责人。调整分工时，必须同步更新：
 
@@ -485,7 +489,7 @@ pnpm start
 - `main` 只接受来自 `dev` 的发布 PR。
 - 功能 PR 使用 Squash Merge；`dev → main` 发布使用 Merge Commit。
 - 合并后删除源分支。
-- 每个 PR 至少 1 人 approve，CI 通过，所有 review conversation 解决后才能合并。
+- 每个 PR 至少 1 人 approve，所有 review conversation 解决；在 CI 可用时必须通过 `quality` 检查后才能合并。
 - 不允许自己 approve 自己的 PR。
 - 不对共享分支强制推送；不对 `main`/`dev` 做历史重写。
 - 功能分支命名：`feat/...`、`fix/...`、`docs/...`、`chore/...`、`refactor/...`。
@@ -495,15 +499,19 @@ pnpm start
   - 均要求 PR、至少 1 个 approve、解决全部 review conversation；
   - `dev` 要求线性历史（Squash Merge），`main` 允许发布时使用 Merge Commit；
   - 管理员暂未被强制限制，但仅允许在紧急情况下绕过，并必须在 PR/Issue 中说明原因；
-  - CI 工作流已随阶段 1 PR 添加，合并后在 `dev` 分支保护中设为必需状态检查。
+  - CI 工作流已随阶段 1 PR 添加；当前 Actions 运行仍处于排队状态，尚未成功完成，因此暂未把 `quality` 设为 `dev` 的必需状态检查。CI 恢复并成功运行后再启用。
+  - CI 未成功运行前，PR 必须由执行 AI 在本地运行 `pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果，不能声称 CI 已通过。
+  - “Require review from Code Owners”暂不启用：当前 `CLAUDE.md`、`docs/`、`.github/` 的 owner 只有 @x-1784，启用后 @x-1784 自己的文档 PR 无法获批。等这些路径至少有两个共同 owner 后再考虑启用。
 
 ### 16.4 共享文件与所有权
 
-- `src/components/three/**`、`src/components/marketing/**`、首页视觉：角色 A。
-- `src/app/api/**`、`src/lib/ai/**`、`src/lib/db/**`、`src/lib/auth/**`、`src/lib/security/**`：角色 B。
-- `src/app/[locale]/layout.tsx`、对话工作台、共享 UI、`messages/**`、`tests/**`、`.github/**`、根配置、文档：角色 C。
+- **@BJSH-1**：`src/components/three/**`、`src/components/marketing/**`、`src/app/[locale]/page.tsx`（首页）、首页视觉。
+- **@Nanami1-1**：`src/app/api/**`（`src/app/api/health/**` 除外）、`src/lib/ai/**`、`src/lib/db/**`、`src/lib/auth/**`、`src/lib/security/**`、`prisma/**`、`drizzle/**`。
+- **@x-1784**：`src/app/api/health/**`、`src/app/[locale]/layout.tsx`、对话工作台、共享 UI、`messages/**`、`tests/**`、`.github/**`、根配置（含 `.env.example`）、文档。
+- `/api/health` 由 @x-1784 实现，@Nanami1-1 提供响应契约、错误语义和无密钥时的行为约定。
+- `.env.example` 由 @x-1784 维护结构；AI/数据库变量名由 @Nanami1-1 提出。
 - 修改别人负责的目录前，必须先协调。
-- 修改 `package.json`、`pnpm-lock.yaml`、`messages/**` 结构、`CLAUDE.md`、全局配置或 CI，必须由角色 C 评审。
+- 修改 `package.json`、`pnpm-lock.yaml`、`messages/**` 结构、`CLAUDE.md`、全局配置或 CI，必须由 @x-1784 评审。
 - 新增依赖必须说明用途、版本、替代方案和影响，不得一次性安装大量未评估依赖。
 
 ### 16.5 AI 接手规则
@@ -532,9 +540,10 @@ pnpm start
 1. ✅ 合并团队文档 PR 到 `dev`（2026-10-19，PR #1，`@Nanami1-1` approve）；
 2. 三人最终确认分工（PR #1 已由 `@Nanami1-1` 通过评审）；
 3. ✅ 已配置 `main`/`dev` 分支保护与仓库合并策略（2026-10-19）；
-4. 🚧 阶段 1：Next.js、i18n、基础布局、CI 已完成并通过本地验证，等待 PR 合入 `dev`；
-5. 阶段 1 添加 CI 后，把 lint/typecheck/test/build 设为 `dev` 的必需状态检查；
-6. 之后才进入阶段 2 首页与 3D。
+4. ✅ 阶段 1 脚手架已通过 PR #4 合入 `dev`（2026-10-19，`883613b`）；
+5. 🚧 CI `quality` 工作流尚未成功运行；先在最新 `dev` 上完成本地复验，再恢复 CI；
+6. 🚧 完成 `/api/health` 小 PR、Issue #3 文档修正和阶段 1 验收后，才进入阶段 2；
+7. CI 恢复后，把 `quality` 设为 `dev` 的必需状态检查。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。
 
@@ -560,5 +569,6 @@ pnpm start
 - 在项目脚手架合入 `dev` 之前，只允许**一个** AI 负责初始化 Next.js、安装基础依赖、建立目录和 CI；
 - 其他 AI 在此期间只做准备：阅读文档、提出设计 token、API 契约、3D 方案、测试策略；
 - 不允许三套 AI 并行创建项目、并行安装依赖或并行修改根配置；
-- 脚手架合入后，各角色再从最新 `dev` 切出自己的功能分支。
-- 当前阶段 1 的单写者为协调 AI（Claude Code），工作分支 `chore/phase1-scaffold`；脚手架合入 `dev` 后恢复常规角色分工。
+- 判定标准：在 `src/`、`messages/`、根配置、`.github/` 下新增或修改文件属于“施工”；写 Issue、PR 描述、设计文档、契约草案属于“准备”；
+- 脚手架合入后，各角色再从最新 `dev` 切出自己的功能分支；
+- 阶段 1 的脚手架由 **@x-1784 的基础设施执行 AI** 完成，工作分支为 `chore/phase1-scaffold`（已合并）。协调 AI（Claude Code）只负责规划、裁定、评审和集成，不直接改文件或提交；这一边界以用户最新指令为准。
