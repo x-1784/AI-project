@@ -309,7 +309,10 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
         colors[i * 3 + 1] = c.g;
         colors[i * 3 + 2] = c.b;
       }
-      particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      particleGeo.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3),
+      );
       particleGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     }
     const particleMat = new THREE.PointsMaterial({

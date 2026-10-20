@@ -19,7 +19,7 @@ function hasWebGL(): boolean {
     const canvas = document.createElement("canvas");
     return Boolean(
       window.WebGLRenderingContext &&
-        (canvas.getContext("webgl2") || canvas.getContext("webgl")),
+      (canvas.getContext("webgl2") || canvas.getContext("webgl")),
     );
   } catch {
     return false;
@@ -82,7 +82,9 @@ export function EnergyCoreStage({ className, fallbackLabel }: Props) {
     /* pointer-events-none：画布铺满首屏区域，若不关掉指针事件会挡住下方的
        AI 输入框。视差是通过 window 上的 pointermove 实现的（见 canvas 内
        onPointerMove），所以关掉画布自身的指针事件不影响交互。 */
-    <div className={["pointer-events-none", className].filter(Boolean).join(" ")}>
+    <div
+      className={["pointer-events-none", className].filter(Boolean).join(" ")}
+    >
       {/* 静态轮廓先占位，3D 就绪后淡入覆盖，避免闪黑/跳变 */}
       <div
         className={`absolute inset-0 transition-opacity duration-300 ${
