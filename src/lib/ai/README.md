@@ -1,8 +1,9 @@
 # `src/lib/ai` — 角色 B 的服务端边界
 
-> 状态：**阶段 1（只定义契约，不发起真实调用）**
+> 状态：**阶段 2（契约已冻结，不发起真实调用）**
 > 归属：`@Nanami1-1`（角色 B）。前端如需类型，请从 `@/lib/ai/contracts` 引入。
 > 上级规范：`CLAUDE.md` §8、`docs/roles/AI_BACKEND.md` §3–§4。
+> `/api/chat` 的完整契约见 [`CHAT_CONTRACT.md`](./CHAT_CONTRACT.md)。
 
 ---
 
@@ -15,6 +16,7 @@
 | `errors.ts` | 8 条稳定错误码与响应结构 | 可以（纯类型与常量） |
 | `contracts.ts` | `/api/chat` 请求、上限、流式帧、健康检查结构 | 可以（纯类型与常量） |
 | `index.ts` | 服务端 barrel | 否（`server-only`） |
+| `CHAT_CONTRACT.md` | `/api/chat` 契约正文：帧、错误、abort、超时、限流、前端参考实现 | 是（纯文档） |
 
 `server-only` 由 Next.js 内置别名提供，阶段 1 **不新增任何依赖**；
 客户端若误引入带 `server-only` 的文件，构建会直接失败。
@@ -71,7 +73,7 @@
 
 ---
 
-## 4. `/api/chat` 契约（草案）
+## 4. `/api/chat` 契约（阶段 2 已冻结，阶段 4 实现）
 
 请求：
 
@@ -89,24 +91,30 @@
 | 请求体大小 | 128 KiB |
 
 - 角色只允许 `user` / `assistant`；`system` 不开放，提示词由服务端决定。
-- 流式帧结构见 `contracts.ts` 的 `ChatStreamEvent`，**阶段 3 与角色 C 确认后冻结**。
+- 流式传输为 **NDJSON**（每行一个 JSON），帧类型见 `contracts.ts` 的 `ChatStreamEvent`：
+  `start` → `text-delta`* → (`finish` | `error`)。
 - 客户端断开时必须把 abort 传递给上游，并记录为 `STREAM_ABORTED`。
 
-**阶段 1 不实现该路由**：`src/app/api/chat/route.ts` 属于阶段 4。
+**完整契约（校验顺序、错误两条路径、abort/超时语义、限流、前端消费参考实现）见 [`CHAT_CONTRACT.md`](./CHAT_CONTRACT.md)。**
+
+**阶段 2 不实现该路由**：`src/app/api/chat/route.ts` 属于阶段 4。
 
 ---
 
-## 5. `GET /api/health` 契约（草案，归属待定）
+## 5. `GET /api/health`（归属：角色 C，B 只提供契约）
+
+实现位于 `src/app/api/health/route.ts`（`@x-1784`）。B 提供的是 `contracts.ts` 里的
+`HealthCheckResponse` 与 `service.ts` 的 `getAiAvailability()`。
 
 ```json
 { "status": "ok", "ai": "configured", "timestamp": "2026-10-20T00:00:00.000Z" }
 ```
 
 - 只暴露「已配置 / 未配置」，不返回模型名、上游地址或密钥片段。
-- 未配置 AI 时 `status` 为 `degraded`，但 HTTP 仍返回 200（服务本身是活的）。
-
-**本次不实现路由**：归属存在冲突（`CODEOWNERS` 判 C、`CLAUDE.md` §16.4 判 B），
-等 Issue #3 的 D1 裁定后再落地；若判给 C，`HealthCheckResponse` 一并移交。
+- **HTTP 恒为 200**：AI 未配置只影响 `ai` 字段，不影响 `status`——否则部署平台会把
+  「配置缺失」误判成「整个应用挂了」。
+- 类型里的 `status: "degraded"` 目前**没有使用**：预留值，实际实现恒返回 `"ok"`。
+  需要 `degraded` 的语义时由 C 决定，B 不单方面启用。
 
 ---
 
@@ -128,7 +136,8 @@
 | 阶段 | 本目录的增量 |
 | --- | --- |
 | 1（已完成） | 配置契约、错误码、请求/流式/健康契约、`server-only` 边界 |
-| 3 | 与 C 冻结流式帧；提供前端可消费的类型 |
+| 2（本阶段） | 冻结 `/api/chat` 契约：NDJSON 传输、4 种帧、校验顺序、abort/超时语义、限流提案（`CHAT_CONTRACT.md`） |
+| 3 | 前端按契约实现工作台；B 只做联调答疑与类型补充 |
 | 4 | 装 `zod` + `ai` + `@ai-sdk/openai-compatible`，实现 `POST /api/chat` 真实流式、超时、abort、按 IP 限流 |
 | 5 | `src/lib/db`、`src/lib/auth`、迁移目录 |
 
