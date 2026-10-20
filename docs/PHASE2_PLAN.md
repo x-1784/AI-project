@@ -295,7 +295,7 @@ AI 只能领取同时满足以下条件的 Issue：
 ```text
 claiming
 角色：<@GitHub 用户名>
-分支：feat/phase2-<任务编号>-<简短描述>
+分支：feat/<任务编号小写>-<简短描述>（例如 feat/p2-design-01-design-tokens）
 计划完成时间：<日期或工作时段>
 计划范围：<一句话>
 ```
