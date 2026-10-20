@@ -17,7 +17,65 @@
     "badge": "AI CREATIVE UNIVERSE",
     "title": "Take your ideas to the next dimension",
     "subtitle": "AI conversation, creative generation, knowledge processing, and a personal workspace—united in one immersive creative universe.",
-    "status": "The foundation is ready. The homepage experience and AI workspace will roll out in the next phases."
+    "status": "The foundation is ready. The homepage experience and AI workspace will roll out in the next phases.",
+    "hero": {
+      "eyebrow": "AI CREATIVE UNIVERSE",
+      "titleLine1": "Launch your ideas",
+      "titleLine2": "into a new dimension",
+      "lead": "One prompt to NEBULA—from first spark to final draft.",
+      "composerPlaceholder": "Describe what you want to create…",
+      "composerHint": "⌘K to talk with NEBULA",
+      "send": "Send",
+      "quickLabel": "Quick start",
+      "quick": {
+        "write": "Write",
+        "summarize": "Summarize",
+        "code": "Code",
+        "image": "Image"
+      }
+    },
+    "core": {
+      "ariaLabel": "NEBULA energy core",
+      "fallbackLabel": "Static preview of the energy core"
+    },
+    "capabilities": {
+      "eyebrow": "Capabilities",
+      "title": "From a single prompt to a finished piece",
+      "lead": "Write, summarize, code, and create images—all in one creative universe.",
+      "index": "01 — 04",
+      "primary": {
+        "title": "Writing",
+        "body": "From outline to final draft, while keeping your voice and judgment."
+      },
+      "item": {
+        "summarize": "Summarize",
+        "code": "Code",
+        "image": "Images"
+      },
+      "flow": {
+        "idea": "Ideate",
+        "generate": "Generate",
+        "refine": "Refine",
+        "finish": "Finalize"
+      }
+    },
+    "workspace": {
+      "eyebrow": "Workspace",
+      "title": "Ideas, conversations, and work—all in one place",
+      "body": "Conversations, drafts, and generated results no longer scatter across tools.",
+      "previewBadge": "Interface preview · Not real data",
+      "previewAriaLabel": "Preview of the NEBULA workspace interface"
+    },
+    "manifesto": {
+      "title": "Creation isn't filling in forms—it's giving ideas a shape.",
+      "point1": "One entry point for the entire journey from spark to final piece.",
+      "point2": "AI expands; you keep the judgment.",
+      "point3": "Every creation becomes a reusable asset."
+    },
+    "cta": {
+      "title": "Your next idea starts here.",
+      "button": "Start creating"
+    }
   },
   "Footer": {
     "rights": "© NEBULA AI",
