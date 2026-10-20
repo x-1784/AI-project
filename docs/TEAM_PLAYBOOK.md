@@ -79,7 +79,7 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 | 分支 | 用途 | 规则 |
 | --- | --- | --- |
 | `main` | 可部署的稳定版本 | 禁止直接 push；只接受 `dev → main` 的发布 PR；至少 1 人 approve |
-| `dev` | 日常集成 | 禁止直接 push；所有功能/修复通过 PR 合入；至少 1 人 approve；CI 可用时通过 |
+| `dev` | 日常集成 | 禁止直接 push；所有功能/修复通过 PR 合入；至少 1 人 approve；必须通过 `quality` 检查 |
 | 个人分支 | 个人工作区和实验 | 例如 `xzz`；从最新 `dev` 切出，定期同步 `dev` |
 | 功能分支 | 单个任务的短生命周期分支 | `feat/...`、`fix/...`、`docs/...`、`chore/...`；完成后立即开 PR |
 
@@ -232,7 +232,7 @@ chore(ci): add lint and typecheck workflow
 
 ## 6. CI 与质量门禁
 
-阶段 1 已添加 `.github/workflows/ci.yml`，当前包含：
+阶段 1 已添加 `.github/workflows/ci.yml`，在 PR 和推送 `dev` 时运行 `quality`，包含：
 
 - `pnpm install --frozen-lockfile`；
 - `pnpm format:check`；
@@ -241,16 +241,17 @@ chore(ci): add lint and typecheck workflow
 - `pnpm build`；
 - `pnpm test` 在 Vitest 接入后加入。
 
+2026-10-20 起，`quality` 已设为 `dev` 的必需状态检查，PR 分支还必须与最新 `dev` 同步；未通过时 GitHub 会阻止合并。
+
 要求：
 
-- CI 可用的 PR 必须通过 CI 才能合并；
+- 所有 PR 必须在 PR 上通过 `quality` 才能合并；
+- 合并后 `dev` 的 push CI 通过，不能替代 PR 合并前的 `quality` 结果；
+- 本地检查仍是 PR 的最低要求：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果；
 - CI 中不使用真实 AI 密钥；
 - AI 相关测试使用 mock 或明确的集成测试开关；
 - 构建阶段即使没有 AI 密钥也必须能完成；
-- 不在日志中输出密钥、用户内容或内部堆栈；
-- CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 与 `dev@801c4a1` 的 run `39425381720` 已通过。`quality` 待阶段 2 开始前设为 `dev` 的必需状态检查；
-- PR #7 合并前因工作流刚恢复没有 CI 结果，合并后 `dev` 的 push CI 已通过；后续 PR 必须在 PR 上通过 `quality`，不能把“合并后 dev CI 通过”当作“PR 合并前已通过”；
-- 本地检查仍是 PR 的最低要求：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果。
+- 不在日志中输出密钥、用户内容或内部堆栈。
 
 ---
 

@@ -220,7 +220,7 @@ pnpm build
 3. 阶段 1 本地复验已完成：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 i18n 冒烟通过；记录见 `docs/PHASE1_SUMMARY.md`；
 4. Issue #3 已关闭；
 5. `/api/health` 已通过 PR #7 合并；阶段 2 计划 PR #10 的 CI 已通过；
-6. 阶段 2 开始前把 `quality` 设为 `dev` 的必需状态检查；
+6. ✅ 2026-10-20 已把 `quality` 设为 `dev` 的必需状态检查（P2-INFRA-01 #24）；
 7. 阶段 2 计划已合入；先领取 [#24 P2-INFRA-01](https://github.com/x-1784/AI-project/issues/24)，再按 [#22 总览](https://github.com/x-1784/AI-project/issues/22) 领取 #16/#17/#18/#19。
 
 ---
