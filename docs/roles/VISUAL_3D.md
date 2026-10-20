@@ -84,7 +84,7 @@
 
 ### 4.1 技术方案
 
-- Three.js + `@react-three/fiber` + `@react-three/drei`；
+- Three.js（裸用，不引入 `@react-three/fiber` / `@react-three/drei`）；
 - 自定义 `ShaderMaterial` 实现能量球体；
 - 顶点位移使用 3D 噪声/fbm，形成流动表面；
 - 片元着色器组合：

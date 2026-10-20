@@ -100,7 +100,7 @@
 - **组件**：shadcn/ui（按需引入，不整包复制）
 - **图标**：lucide-react
 - **国际化**：next-intl
-- **3D**：Three.js + @react-three/fiber + @react-three/drei
+- **3D**：Three.js（裸用，不引入 R3F / Drei）
 - **动画**：CSS 优先；复杂时间轴确有必要时再评估轻量动画库或 GSAP
 - **表单/请求校验**：Zod
 - **AI 服务**：Vercel AI SDK + OpenAI-compatible provider
@@ -119,7 +119,7 @@
 - 已锁定版本（阶段 1）：Next.js `16.4.2`、React / React DOM `19.3.0`、next-intl `4.14.9`、Tailwind CSS `4.3.3`、TypeScript `5.9.3`、Prettier `3.9.10`。
 - Next.js 16 使用 `src/proxy.ts`（原 `middleware.ts`）；本项目国际化入口在 `src/proxy.ts`，不要同时创建 `middleware.ts`。
 - Next.js 16 默认启用 Cache Components 与 Partial Prefetching；页面读取 `new Date()`、`usePathname()` 等运行时数据时，按官方提示使用 Suspense、`"use cache"` 或 `instant = false`。
-- 3D 依赖（Three.js / R3F / Drei）在阶段 2 由 @BJSH-1 引入，届时核对与 React 19 的兼容版本。
+- 3D 依赖（Three.js）在阶段 2 由 @BJSH-1 引入；已确认方案 A：裸用 three，不引入 R3F / Drei。
 - pnpm 可能会拦截依赖的构建脚本；如 `sharp`、`@tailwindcss/oxide` 等需要构建，使用 `pnpm approve-builds` 并记录原因。
 
 ---
@@ -223,7 +223,7 @@ webdev/
 
 ### 7.1 3D 能量核心
 
-- 使用真实 WebGL 实时渲染，基于 R3F 与自定义 shader。
+- 使用真实 WebGL 实时渲染，基于裸用 three 与自定义 shader。
 - 视觉构成：能量球体、流动光带、噪声位移、Fresnel 边缘光、星尘粒子、柔和辉光。
 - 蓝紫渐变为主，必须有体积感、深度和细腻光照，避免纯发光球体。
 - 鼠标移动产生克制的视差/视线响应；交互时提供自然的能量反馈。
