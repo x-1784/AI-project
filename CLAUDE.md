@@ -27,9 +27,9 @@
 
 ## 2. 当前阶段与阶段门禁
 
-**当前阶段：阶段 2（首页与视觉原型），计划已合入 `dev@2be2a69`；Issue #11–#22 已创建，按 Issue 领取任务。**
+**当前阶段：阶段 2（首页与视觉原型），计划已合入 `dev@2be2a69`；Issue #11–#22、#24 已创建，按 Issue 领取任务。**
 
-> 2026-10-20 更新：阶段 1 已正式验收通过；阶段 2 计划已合入 `dev`；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21 已创建。P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`，其余任务按依赖逐步开放。阶段 2 不实现 `/api/chat`、真实 AI、数据库或认证。详见 `docs/PHASE2_PLAN.md`。
+> 2026-10-20 更新：阶段 1 已正式验收通过；阶段 2 计划已合入 `dev`；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21、#24 已创建。P2-INFRA-01 #24、P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`，其余任务按依赖逐步开放。阶段 2 不实现 `/api/chat`、真实 AI、数据库或认证。详见 `docs/PHASE2_PLAN.md`。
 
 阶段门禁规则：
 
@@ -468,7 +468,7 @@ pnpm start
 - `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，合并提交 `a5b2f46`）；源分支已删除
 - 阶段 1 收尾总结已通过 PR #8 合入 `dev`（2026-10-20，合并提交 `801c4a1`）；源分支已删除
 - 阶段 1 正式验收状态已通过 PR #9 合入 `dev`（合并提交 `2be2a69`）
-- 阶段 2 计划已通过 PR #10 合入 `dev`（合并提交 `ade9224`）；总追踪 Issue #22 和子 Issue #11–#21 已创建
+- 阶段 2 计划已通过 PR #10 合入 `dev`（合并提交 `ade9224`）；总追踪 Issue #22 和子 Issue #11–#21、#24 已创建
 
 ### 16.2 团队分工（默认建议，可协商互换）
 
@@ -552,8 +552,8 @@ pnpm start
 7. ✅ `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，`a5b2f46`）；
 8. ✅ `dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过；
 9. ✅ 阶段 1 正式验收：PR #8 已合并（`801c4a1`），Issue #3 已关闭，用户已确认；
-10. ✅ 阶段 2 计划已通过 PR #10 合入 `dev`（`ade9224`）；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21 已创建；
-11. 🚧 各角色按 Issue 领取：P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`；@BJSH-1 从最新 `dev` 重做 3D/首页移植；
+10. ✅ 阶段 2 计划已通过 PR #10 合入 `dev`（`ade9224`）；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21、#24 已创建；
+11. 🚧 各角色按 Issue 领取：P2-INFRA-01 #24、P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`；@BJSH-1 从最新 `dev` 重做 3D/首页移植；
 12. ⏳ 把 `quality` 设为 `dev` 的必需状态检查。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。

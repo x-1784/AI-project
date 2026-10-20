@@ -108,7 +108,7 @@
 - 团队文档、脚手架、Issue #3 文档修正、AI 契约层、`/api/health`、阶段 1 总结和阶段 2 计划已合入 `dev`（最新 `2be2a69`）；
 - CI `quality` 已通过；
 - 阶段 1 正式验收已完成：PR #8 合并、Issue #3 关闭、用户确认；
-- 阶段 2 的计划、里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21 已创建；
+- 阶段 2 的计划、里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21、#24 已创建；
 - 按 `docs/PHASE2_PLAN.md` 和 Issue 领取规则执行；不要绕过 Issue 直接开始编码；
 - 详细记录见 `docs/PHASE1_SUMMARY.md` 和 `docs/PHASE2_PLAN.md`。
 

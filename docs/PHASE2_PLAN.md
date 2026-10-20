@@ -1,7 +1,7 @@
 # 阶段 2 计划：首页与视觉原型
 
 > 版本：2026-10-20
-> 状态：Active；已合入 `dev@2be2a69`，Issue #11–#22 已创建
+> 状态：Active；已合入 `dev@2be2a69`，Issue #11–#22、#24 已创建
 > 前置条件：阶段 1 已正式验收通过（`dev@2be2a69`，PR #8 / PR #9）
 > 适用范围：@BJSH-1、@Nanami1-1、@x-1784
 > 任务状态以 GitHub Issue 为准，本文件只定义计划、边界和领取规则。
@@ -90,6 +90,15 @@
 - **产出**：本文件；Phase 2 总追踪 Issue；子 Issue 清单；标签和里程碑
 - **验收**：计划评审通过；Issue 创建完成；任务依赖和领取规则清晰
 - **验证**：文档评审；Issue 链接可访问
+- **状态**：✅ 已完成（PR #10，Issue #22）
+
+### P2-INFRA-01 · 阶段 2 启动与质量门禁
+
+- **负责人**：`@x-1784`
+- **依赖**：无
+- **产出**：`quality` 设为 `dev` 必需检查；核对里程碑、标签和 Issue；合并 kickoff 文档 PR #23；发出领取提示词
+- **验收**：`quality` 是 `dev` 必需检查；Issue/标签/里程碑可用；PR #23 合并；无业务代码改动
+- **验证**：检查分支保护；检查 Issue 列表；PR #23 CI 通过
 
 ### P2-DESIGN-01 · 设计 token 与视觉语言
 
@@ -246,6 +255,7 @@ P2-QA-01
 | 任务 | Issue | 初始状态 |
 | --- | --- | --- |
 | P2-PLAN-01 | [#22](https://github.com/x-1784/AI-project/issues/22) | 总追踪 Issue |
+| P2-INFRA-01 | [#24](https://github.com/x-1784/AI-project/issues/24) | `status:ready` |
 | P2-DESIGN-01 | [#11](https://github.com/x-1784/AI-project/issues/11) | `status:ready` |
 | P2-HOME-01 | [#12](https://github.com/x-1784/AI-project/issues/12) | `status:blocked` |
 | P2-3D-01 | [#13](https://github.com/x-1784/AI-project/issues/13) | `status:blocked` |
@@ -378,7 +388,7 @@ Issue 必须包含：
 
 1. ✅ 合并本计划 PR；
 2. ✅ 创建 `Phase 2 — 首页与视觉原型` 里程碑和标签；
-3. ✅ 创建总追踪 Issue #22 和子 Issue #11–#21；
+3. ✅ 创建总追踪 Issue #22 和子 Issue #11–#21、#24；
 4. 🚧 按依赖关系把 `status:ready` 开放给对应负责人；
 5. 三个人把领取提示词发给自己的 AI；
 6. AI 只领取一个任务，按 Issue 流程推进；
@@ -392,3 +402,4 @@ Issue 必须包含：
 | --- | --- |
 | 2026-10-20 | 创建阶段 2 计划草案：任务拆分、依赖、Issue 清单和 AI 领取协议 |
 | 2026-10-20 | 计划合入 `dev@2be2a69`；创建里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21 |
+| 2026-10-20 | 新增 P2-INFRA-01 #24（阶段 2 启动与质量门禁），更新 Issue 清单 |

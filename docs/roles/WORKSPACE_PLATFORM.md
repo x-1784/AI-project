@@ -221,7 +221,7 @@ pnpm build
 4. Issue #3 已关闭；
 5. `/api/health` 已通过 PR #7 合并；阶段 2 计划 PR #10 的 CI 已通过；
 6. 阶段 2 开始前把 `quality` 设为 `dev` 的必需状态检查；
-7. 阶段 2 计划已合入；按 [#22 总览](https://github.com/x-1784/AI-project/issues/22) 领取 #16/#17/#18/#19。
+7. 阶段 2 计划已合入；先领取 [#24 P2-INFRA-01](https://github.com/x-1784/AI-project/issues/24)，再按 [#22 总览](https://github.com/x-1784/AI-project/issues/22) 领取 #16/#17/#18/#19。
 
 ---
 

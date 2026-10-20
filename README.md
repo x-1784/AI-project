@@ -2,7 +2,7 @@
 
 **AI Creative Universe** — 将 AI 对话、创意生成、知识处理和个人工作空间融合在一起的沉浸式 AI 创作平台。
 
-> 项目状态：阶段 1 已正式验收通过，阶段 2 计划已合入，任务 Issue #11–#22 已创建；`dev@2be2a69`。详见 [阶段 1 总结](docs/PHASE1_SUMMARY.md) 和 [阶段 2 计划](docs/PHASE2_PLAN.md)。
+> 项目状态：阶段 1 已正式验收通过，阶段 2 计划已合入，任务 Issue #11–#22、#24 已创建；`dev@2be2a69`。详见 [阶段 1 总结](docs/PHASE1_SUMMARY.md) 和 [阶段 2 计划](docs/PHASE2_PLAN.md)。
 
 ---
 
