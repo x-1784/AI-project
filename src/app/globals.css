@@ -98,15 +98,11 @@ html {
 
 body {
   min-height: 100dvh;
+  /* 单光源：只保留左上，右侧环境亮度交给 3D 光晕（DESIGN_TOKENS §5.5） */
   background:
     radial-gradient(
       60rem 40rem at 15% -10%,
-      rgba(91, 140, 255, 0.16),
-      transparent 60%
-    ),
-    radial-gradient(
-      50rem 36rem at 90% 10%,
-      rgba(155, 107, 255, 0.12),
+      rgba(75, 140, 255, 0.16),
       transparent 60%
     ),
     var(--background);

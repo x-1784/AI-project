@@ -47,7 +47,12 @@ export default async function LocaleLayout({
           </a>
           <div className="flex min-h-dvh flex-col">
             <SiteHeader />
-            <main id="main-content" className="flex-1">
+            <main
+              id="main-content"
+              tabIndex={-1}
+              // 跳到正文后让出 sticky header 的高度，避免标题被遮住。
+              className="flex-1 scroll-mt-16"
+            >
               {children}
             </main>
             <SiteFooter />

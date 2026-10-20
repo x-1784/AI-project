@@ -11,7 +11,7 @@ export default function LocaleError({ reset }: LocaleErrorProps) {
   const t = useTranslations("Error");
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col items-start gap-4 px-6 py-24 sm:py-32">
+    <section className="mx-auto flex w-full max-w-[80rem] flex-col items-start gap-4 px-5 py-24 sm:px-8 sm:py-32">
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
         {t("title")}
       </h1>

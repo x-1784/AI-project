@@ -6,7 +6,7 @@ export default async function LocaleNotFound() {
   const t = await getTranslations("NotFound");
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col items-start gap-4 px-6 py-24 sm:py-32">
+    <section className="mx-auto flex w-full max-w-[80rem] flex-col items-start gap-4 px-5 py-24 sm:px-8 sm:py-32">
       <p className="text-sm font-medium tracking-[0.3em] text-accent">404</p>
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
         {t("title")}
