@@ -248,7 +248,7 @@ chore(ci): add lint and typecheck workflow
 - AI 相关测试使用 mock 或明确的集成测试开关；
 - 构建阶段即使没有 AI 密钥也必须能完成；
 - 不在日志中输出密钥、用户内容或内部堆栈；
-- CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 已通过。`quality` 待阶段 1 正式验收时设为 `dev` 的必需状态检查；
+- CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 与 `dev@801c4a1` 的 run `39425381720` 已通过。`quality` 待阶段 2 开始前设为 `dev` 的必需状态检查；
 - PR #7 合并前因工作流刚恢复没有 CI 结果，合并后 `dev` 的 push CI 已通过；后续 PR 必须在 PR 上通过 `quality`，不能把“合并后 dev CI 通过”当作“PR 合并前已通过”；
 - 本地检查仍是 PR 的最低要求：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果。
 
