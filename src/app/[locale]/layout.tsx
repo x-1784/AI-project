@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -8,6 +9,21 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { routing } from "@/i18n/routing";
 
 import "../globals.css";
+
+// 自托管变量字体：避免运行时依赖 Google Fonts，国内网络更稳定。
+const spaceGrotesk = localFont({
+  src: "../../../public/fonts/space-grotesk-variable.woff2",
+  variable: "--font-space-grotesk",
+  weight: "300 700",
+  display: "swap",
+});
+
+const inter = localFont({
+  src: "../../../public/fonts/inter-variable.woff2",
+  variable: "--font-inter",
+  weight: "100 900",
+  display: "swap",
+});
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
@@ -36,7 +52,10 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale, namespace: "Navigation" });
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      className={`${spaceGrotesk.variable} ${inter.variable}`}
+    >
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
         <NextIntlClientProvider>
           <a
