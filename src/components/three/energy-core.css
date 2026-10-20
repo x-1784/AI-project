@@ -1,0 +1,18 @@
+/**
+ * 3D 能量核心的局部动画定义。
+ *
+ * 为什么单独建这个文件，而不是写进 src/app/globals.css：
+ * 1. globals.css 由 @x-1784 兜底维护，3D 的动画关键帧属于 src/components/three/** 范围；
+ * 2. 用 CSS Module 不行 —— CSS Modules 会把 @keyframes 的名字做哈希作用域化，
+ *    而 stage.tsx 里用的是 Tailwind 任意值 `animate-[nx-fade-in_320ms_ease-out]`，
+ *    它引用的必须是全局的 nx-fade-in，所以这里用普通 CSS（全局）而不是 .module.css；
+ * 3. 只在 stage.tsx 里 import，未使用该组件的页面不会加载这段样式。
+ */
+@keyframes nx-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
