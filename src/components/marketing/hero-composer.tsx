@@ -41,7 +41,7 @@ export function HeroComposer({
       onSubmit={(event) => {
         event.preventDefault();
       }}
-      className="mt-8 w-full max-w-[min(560px,72vw)] lg:max-w-xl"
+      className="mt-8 w-full max-w-[min(560px,72vw)] scroll-mt-[calc(4rem+1px)] lg:max-w-xl"
     >
       <Panel
         tone="glass"
