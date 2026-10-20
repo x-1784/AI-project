@@ -2,7 +2,7 @@
 
 **AI Creative Universe** — 将 AI 对话、创意生成、知识处理和个人工作空间融合在一起的沉浸式 AI 创作平台。
 
-> 项目状态：阶段 1（基础设施）技术验收已通过，`dev@a5b2f46`，CI run `39423560729` 成功；等待用户确认正式验收，阶段 2 尚未开始。详见 [阶段 1 总结](docs/PHASE1_SUMMARY.md)。
+> 项目状态：阶段 1（基础设施）已正式验收通过，`dev@801c4a1`，CI run `39425381720` 成功；阶段 2 规划可以开始。详见 [阶段 1 总结](docs/PHASE1_SUMMARY.md)。
 
 ---
 
@@ -62,8 +62,8 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 
 ```text
 阶段 0 规划与团队接手      ← 已完成
-阶段 1 基础设施            ← 技术验收通过，待用户确认
-阶段 2 首页与 3D            ← 尚未开始
+阶段 1 基础设施            ← 正式验收通过
+阶段 2 首页与 3D            ← 规划中
 阶段 3 AI 工作台 UI
 阶段 4 真实 AI 服务
 阶段 5 数据库与用户系统
@@ -80,7 +80,8 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 - `/api/health` 健康检查（PR #7）：200、`Cache-Control: no-store`、动态 timestamp；
 - `.env.example`、README、GitHub Actions CI；
 - `src/app/api/health/**` 归 @x-1784，@Nanami1-1 提供响应契约；
-- `dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过。
+- `dev@a5b2f46` 的 CI run `39423560729` 与 `dev@801c4a1` 的 run `39425381720` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过；
+- 阶段 1 收尾文档已通过 PR #8 合并，Issue #3 已关闭，用户已确认正式验收。
 
 阶段 2 开始前，首页视觉和 3D 场景仍由 @BJSH-1 负责，其他成员不要提前生成完整首页。
 

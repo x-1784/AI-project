@@ -2,7 +2,7 @@
 
 > 本文件是本项目内 AI Agent 的最高优先级开发指令。
 > 在本仓库中开始任何工作前，必须先阅读并遵守本文件。
-> 最后更新：2026-10-20（阶段 1 收尾与验收）
+> 最后更新：2026-10-20（阶段 1 正式验收）
 
 ---
 
@@ -27,9 +27,9 @@
 
 ## 2. 当前阶段与阶段门禁
 
-**当前阶段：阶段 1（项目基础设施）技术验收已通过，`dev@a5b2f46`；等待用户确认正式验收。阶段 2 尚未开始。**
+**当前阶段：阶段 1（项目基础设施）已正式验收通过，`dev@801c4a1`。阶段 2 可以开始规划，但实现任务需先完成计划、Issue 拆分和任务领取流程。**
 
-> 2026-10-20 更新：PR #1、#4、#5、#6、#7 已合入 `dev`；`dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build、`/` → `/zh-CN`、`/en`、`/api/health` 已复验。阶段 1 的正式验收还差本总结 PR 合并与 Issue #3 关闭；在用户确认前不要进入阶段 2。详见 `docs/PHASE1_SUMMARY.md`。
+> 2026-10-20 更新：PR #1、#4、#5、#6、#7、#8 已合入 `dev`；`dev@801c4a1` 的 CI run `39425381720` 全流程通过；本地 format/lint/typecheck/build、`/` → `/zh-CN`、`/en`、`/api/health` 已复验；Issue #3 已关闭；用户已确认阶段 1 正式验收。阶段 2 先做计划与任务拆分，不要并行开工。详见 `docs/PHASE1_SUMMARY.md`。
 
 阶段门禁规则：
 
@@ -417,9 +417,9 @@ pnpm start
 - pnpm：`11.22.0`（与 `package.json` 的 `packageManager` 一致；以 `pnpm -v` 实测为准）
 - Git：`2.55.0`
 - npm registry：`https://registry.npmmirror.com`
-- Git 仓库已初始化并关联远程；最新 `dev` 为 `a5b2f46`，阶段 1 技术验收已通过。
+- Git 仓库已初始化并关联远程；最新 `dev` 为 `801c4a1`，阶段 1 正式验收已通过。
 - 本地依赖通过 `pnpm install` 安装，锁文件为 `pnpm-lock.yaml`；`pnpm-workspace.yaml` 已放行 `@parcel/watcher` 与 `@swc/core` 的构建脚本（next-intl 工具链需要）。
-- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI run `39423560729` 已在 `dev@a5b2f46` 通过。
+- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI run `39423560729` 在代码基线 `dev@a5b2f46` 通过，`dev@801c4a1` 的 run `39425381720` 也通过。
 
 环境注意事项：
 
@@ -466,7 +466,8 @@ pnpm start
 - Issue #3 文档修正已通过 PR #5 合入 `dev`（合并提交 `a525397`）
 - AI 契约层已通过 PR #6 合入 `dev`（合并提交 `2215084`）
 - `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，合并提交 `a5b2f46`）；源分支已删除
-- 当前阶段总结工作分支：`docs/phase1-closeout`，目标分支 `dev`
+- 阶段 1 收尾总结已通过 PR #8 合入 `dev`（2026-10-20，合并提交 `801c4a1`）；源分支已删除
+- 阶段 1 已正式验收；阶段 2 规划分支待创建
 
 ### 16.2 团队分工（默认建议，可协商互换）
 
@@ -502,7 +503,7 @@ pnpm start
   - 均要求 PR、至少 1 个 approve、解决全部 review conversation；
   - `dev` 要求线性历史（Squash Merge），`main` 允许发布时使用 Merge Commit；
   - 管理员暂未被强制限制，但仅允许在紧急情况下绕过，并必须在 PR/Issue 中说明原因；
-  - CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 已通过。`quality` 已具备设为必需检查的条件，待阶段 1 正式验收时启用。
+  - CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 与 `dev@801c4a1` 的 run `39425381720` 已通过。`quality` 已具备设为必需检查的条件，待阶段 2 开始前启用。
   - PR #7 合并前因工作流刚恢复没有 CI 结果；合并后 `dev` 的 push CI 已通过。后续 PR 必须在 PR 上通过 `quality` 后再合并，不能把“合并后 dev CI 通过”当作“PR 合并前已通过”。
   - 本地检查仍是 PR 的最低要求：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果。
   - “Require review from Code Owners”暂不启用：当前 `CLAUDE.md`、`docs/`、`.github/` 的 owner 只有 @x-1784，启用后 @x-1784 自己的文档 PR 无法获批。等这些路径至少有两个共同 owner 后再考虑启用。
@@ -549,8 +550,9 @@ pnpm start
 6. ✅ AI 契约层已通过 PR #6 合入 `dev`（`2215084`）；
 7. ✅ `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，`a5b2f46`）；
 8. ✅ `dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过；
-9. 🚧 阶段 1 正式验收：合并本总结 PR、关闭 Issue #3、把 `quality` 设为 `dev` 必需检查；
-10. ⏳ 用户确认阶段 1 后，才进入阶段 2；@BJSH-1 从最新 `dev` 重做 3D/首页移植。
+9. ✅ 阶段 1 正式验收：PR #8 已合并（`801c4a1`），Issue #3 已关闭，用户已确认；
+10. 🚧 阶段 2 准备：提交 `docs/PHASE2_PLAN.md`、拆分 Issue、建立领取协议；把 `quality` 设为 `dev` 必需检查；
+11. ⏳ 阶段 2 任务开放后，各角色按 Issue 领取；@BJSH-1 从最新 `dev` 重做 3D/首页移植。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。
 

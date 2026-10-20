@@ -58,7 +58,7 @@
 
 ## 3. 分阶段任务
 
-### 阶段 1：基础设施（已完成技术验收）
+### 阶段 1：基础设施（已完成正式验收）
 
 - [x] 确认团队分工和文档合并；
 - [x] 用 pnpm 初始化 Next.js App Router + TypeScript + Tailwind + ESLint；
@@ -82,7 +82,7 @@
 - [x] 运行 `pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`；
 - [x] 实际验证中英文和根路径跳转。
 
-> 阶段 1 技术验收记录见 `docs/PHASE1_SUMMARY.md`；语言切换按钮的实际点击与多尺寸视觉检查在阶段 2 首页实现时补做。
+> 阶段 1 正式验收记录见 `docs/PHASE1_SUMMARY.md`；语言切换按钮的实际点击与多尺寸视觉检查在阶段 2 首页实现时补做。
 
 ### 阶段 3：AI 工作台 UI
 
@@ -216,12 +216,12 @@ pnpm build
 ## 8. 接手后的第一批任务
 
 1. 阅读共享文档和本文件；
-2. 确认当前分支和远程状态（最新 `dev` 为 `a5b2f46`）；
+2. 确认当前分支和远程状态（最新 `dev` 为 `801c4a1`）；
 3. 阶段 1 本地复验已完成：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 i18n 冒烟通过；记录见 `docs/PHASE1_SUMMARY.md`；
-4. Issue #3 文档修正已通过 PR #5 合并；等待 @Nanami1-1 确认关闭；
-5. `/api/health` 已通过 PR #7 合并；CI run `39423560729` 通过；
-6. 阶段 1 正式验收时把 `quality` 设为 `dev` 的必需状态检查；
-7. 用户确认阶段 1 后，再推进阶段 2。
+4. Issue #3 已关闭；
+5. `/api/health` 已通过 PR #7 合并；`dev@801c4a1` 的 CI run `39425381720` 通过；
+6. 阶段 2 开始前把 `quality` 设为 `dev` 的必需状态检查；
+7. 阶段 1 已正式验收，按阶段 2 计划（待提交）推进。
 
 ---
 
