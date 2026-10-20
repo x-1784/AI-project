@@ -203,8 +203,30 @@ const CORE_SCALE = 0.82;
 const GLOW_SCALE = 2.5;
 
 const PRESET = {
-  full: { detail: 28, maxDpr: 1.5, particles: 1800, rings: 3 },
-  reduced: { detail: 16, maxDpr: 1.0, particles: 320, rings: 0 },
+  /* animate：是否跑 requestAnimationFrame。
+     静态档画面本来就不动，继续每帧 render() 等于白烧 GPU。 */
+  full: {
+    detail: 28,
+    maxDpr: 1.5,
+    particles: 1800,
+    rings: 3,
+    animate: true,
+  },
+  /* 窄屏档，数值来自 docs/design/HOME_IA.md §7.2：粒子 800、DPR 上限 1.25 */
+  compact: {
+    detail: 22,
+    maxDpr: 1.25,
+    particles: 800,
+    rings: 2,
+    animate: true,
+  },
+  reduced: {
+    detail: 16,
+    maxDpr: 1.0,
+    particles: 320,
+    rings: 0,
+    animate: false,
+  },
 } as const;
 
 type Props = {
@@ -225,6 +247,19 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       alpha: true,
       powerPreference: "high-performance",
     });
+
+    /*
+     * 显示尺寸交给 CSS，不要交给 canvas 的 width/height 属性。
+     *
+     * <canvas> 是替换元素：CSS width 为 auto 时会用 width 属性（它反映的是
+     * backing store，已乘以 DPR）作为内在尺寸。也就是说 setSize(w, h, false)
+     * 之后，DPR 直接变成了显示放大倍数——1440@2x 下画布会宽出一倍并被
+     * overflow-hidden 裁掉，核心只剩左上角一块。
+     * 固定成 100% 后，显示尺寸永远等于容器，与 DPR 无关。
+     */
+    renderer.domElement.style.display = "block";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
     renderer.setClearColor(0x000000, 0);
     host.appendChild(renderer.domElement);
 
@@ -239,7 +274,8 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
     const uniforms = {
       uTime: { value: 0 },
       uAmp: { value: 0.03 },
-      uBandSpeed: { value: intensity === "full" ? 0.34 : 0 },
+      /* 静态档把色带流速归零，动态档（含窄屏档）保持原有速度 */
+      uBandSpeed: { value: intensity === "reduced" ? 0 : 0.34 },
       uColorA: { value: new THREE.Color("#0B1030") },
       uColorB: { value: new THREE.Color("#2B5FD9") },
       uColorC: { value: new THREE.Color("#8B5CF6") },
@@ -356,23 +392,6 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
     }
     inner.add(ringGroup);
 
-    /* 尺寸：跟随容器，不用窗口尺寸 */
-    let dpr = 1;
-    const resize = () => {
-      const w = host.clientWidth;
-      const h = host.clientHeight;
-      if (!w || !h) return;
-      dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), preset.maxDpr);
-      renderer.setPixelRatio(dpr);
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    };
-    resize();
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(host);
-
     /* 指针视差：只写 ref，不触发 React 状态更新 */
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
     const onPointerMove = (e: PointerEvent) => {
@@ -383,23 +402,51 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       window.addEventListener("pointermove", onPointerMove, { passive: true });
     }
 
-    /* 渲染循环：页面隐藏即停，回来继续 */
+    /* 画一帧。静态档靠它出画面，动态档在循环里每帧调用。 */
+    const draw = () => {
+      camera.position.x = pointer.x * 0.1;
+      camera.position.y = -pointer.y * 0.07;
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+    };
+
+    /* 尺寸：跟随容器，不用窗口尺寸 */
+    let dpr = 1;
+    const resize = () => {
+      const w = host.clientWidth;
+      const h = host.clientHeight;
+      if (!w || !h) return;
+      dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), preset.maxDpr);
+      renderer.setPixelRatio(dpr);
+      /* 第三个参数 false = 不写 canvas 的 style。显示尺寸已由上面的
+         100% / 100% 固定，这里只改 backing store，避免每次 resize 都
+         往 DOM 上写一次像素值。 */
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      /* 静态档没有循环，尺寸变化后必须补一帧，否则画布是空的 */
+      if (!preset.animate) draw();
+    };
+    resize();
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(host);
+
+    /* 两个暂停条件：标签页隐藏、滚出视口。任一满足就停循环。 */
     let raf = 0;
     let time = 0;
     let last = performance.now();
-    let visible = true;
+    let pageVisible = !document.hidden;
+    let inView = true;
+    let running = false;
 
-    const onVisibility = () => {
-      visible = !document.hidden;
-      last = performance.now();
-    };
-    document.addEventListener("visibilitychange", onVisibility);
+    const isPaused = () => !pageVisible || !inView;
 
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      if (!visible) return;
+      if (isPaused()) return;
 
       if (interactive) {
         time += dt;
@@ -411,17 +458,60 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
 
       pointer.x += (pointer.tx - pointer.x) * 0.045;
       pointer.y += (pointer.ty - pointer.y) * 0.045;
-      camera.position.x = pointer.x * 0.1;
-      camera.position.y = -pointer.y * 0.07;
-      camera.lookAt(0, 0, 0);
-
-      renderer.render(scene, camera);
+      draw();
     };
-    raf = requestAnimationFrame(loop);
 
-    /* 卸载：释放事件、动画与全部 GPU 资源 */
+    const start = () => {
+      if (running || !preset.animate) return;
+      /* 后台标签页里打开时不要开始排队：loop 会每帧重新调度、再在
+         isPaused() 处立刻返回，等于白占一个 rAF 槽位，直到第一次
+         visibilitychange 才真正停下来。 */
+      if (isPaused()) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    };
+
+    const stop = () => {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    /* 从暂停恢复：静态档不会自己重绘，动态档也要重置计时，
+       否则暂停期间累积的时间会让恢复后第一帧跳一下。 */
+    const resume = () => {
+      last = performance.now();
+      if (preset.animate) start();
+      else draw();
+    };
+
+    const onVisibility = () => {
+      pageVisible = !document.hidden;
+      if (isPaused()) stop();
+      else resume();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    /* 滚出视口就停：首屏以下是静态内容，核心没必要继续算。
+       threshold 取 0，刚进入视口就恢复，避免用户看到静止画面。 */
+    const io = new IntersectionObserver(
+      (entries) => {
+        inView = entries[0]?.isIntersecting ?? true;
+        if (isPaused()) stop();
+        else resume();
+      },
+      { threshold: 0 },
+    );
+    io.observe(host);
+
+    if (preset.animate) start();
+    else draw();
+
+    /* 卸载：释放事件、观察者、动画与全部 GPU 资源 */
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
       ro.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onPointerMove);
@@ -438,6 +528,11 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       ringMats.forEach((m) => m.dispose());
 
       renderer.dispose();
+      /* dispose() 只释放 three 自己持有的 GPU 资源，WebGL context 本身要等
+         垃圾回收。档位切换会整块重建场景（跨 768px 或改动态偏好都触发），
+         频繁切换时残留的 context 会堆积并撞上浏览器的 context 上限，
+         所以显式丢掉。 */
+      renderer.forceContextLoss();
       renderer.domElement.remove();
     };
   }, [intensity, interactive]);
