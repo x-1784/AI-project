@@ -12,9 +12,9 @@ NEBULA AI 不是课程作业、静态展示页或套了深色主题的聊天机�
 
 当前状态：
 
-- 项目处于**阶段 1：基础设施**；
-- 团队文档已合入 `dev`（PR #1），阶段 1 脚手架已合入 `dev`（PR #4，`883613b`）；
-- CI `quality` 工作流仍在排队，尚未成功运行；脚手架尚未经过 CI 验证；
+- 项目处于**阶段 1：基础设施**，技术验收已通过，等待用户确认正式验收；
+- 团队文档、脚手架、Issue #3 文档修正、AI 契约层和 `/api/health` 已合入 `dev`（最新 `a5b2f46`）；
+- CI `quality` 已在 `dev@a5b2f46` 全流程通过（run `39423560729`）；
 - 数据库与真实 AI 服务尚未接入；
 - 任何 AI 在开始编码前，必须先阅读本文件、`TEAM_PLAYBOOK.md`、`AI_ONBOARDING.md`、自己的角色文档和根目录 `CLAUDE.md`。
 
@@ -393,6 +393,8 @@ AI_MAX_OUTPUT_TOKENS=
 
 验收：开发服务器可启动；`/` 跳转中文；中英切换正常；类型检查、lint、build 通过。
 
+2026-10-20 技术验收通过，详见 `docs/PHASE1_SUMMARY.md`；正式验收待用户确认。
+
 ### 阶段 2：首页与视觉原型
 
 - 品牌导航、语言切换、首屏排版；
@@ -451,6 +453,7 @@ AI_MAX_OUTPUT_TOKENS=
 
 - 团队分工与 Git 流程：`docs/TEAM_PLAYBOOK.md`
 - 每位 AI 的接手说明：`docs/AI_ONBOARDING.md`
+- 阶段 1 收尾与验收总结：`docs/PHASE1_SUMMARY.md`
 - 角色文档：
   - `docs/roles/VISUAL_3D.md`
   - `docs/roles/AI_BACKEND.md`
@@ -467,6 +470,9 @@ AI_MAX_OUTPUT_TOKENS=
 - 当前已存在个人/实验分支（以远程实际状态为准）；
 - 团队文档已通过 PR #1 合入 `dev`；
 - 阶段 1 脚手架已通过 PR #4 合入 `dev`（`883613b`）；
-- CI `quality` 工作流仍在排队，尚未成功运行；
-- Issue #3 的文档修正正在进行；
-- 下一步：完成本地复验、Issue #3 文档修正和 `/api/health` 小 PR，再进行阶段 1 验收。
+- Issue #3 文档修正已通过 PR #5 合入 `dev`（`a525397`）；
+- AI 契约层已通过 PR #6 合入 `dev`（`2215084`）；
+- `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，`a5b2f46`）；
+- CI `quality` 已在 `dev@a5b2f46` 全流程通过（run `39423560729`）；
+- 阶段 1 技术验收通过；正式验收待本总结 PR 合并、Issue #3 关闭和用户确认；
+- 详细记录见 `docs/PHASE1_SUMMARY.md`。

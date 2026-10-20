@@ -163,10 +163,11 @@ src/components/three/
 
 1. 阅读共享文档和本文件；
 2. 用中文汇报你对视觉方向、3D 方案和角色边界的理解；
-3. 检查当前分支是否基于最新 `dev`（当前 `883613b`）；
+3. 检查当前分支是否基于最新 `dev`（当前 `a5b2f46`）；
 4. 提出设计 token 草案和首页构图草图（文字描述即可）；
 5. 提出 3D 组件树、性能预算和降级方案；
-6. 阶段 1 脚手架已合入 `dev`；从最新 `dev` 切分支做阶段 2 方案，正式实现等阶段 2 授权。
+6. 阶段 1 已收尾；等待用户确认后，从最新 `dev` 新建 `feat/phase2-hero-3d` 做阶段 2；
+7. 只移植 `src/components/three/**`、`src/components/marketing/**`、`public/fonts/**`、设计 token 和首页视觉；不要合并旧 `BJSH` 分支的根布局、`package.json`、lockfile、`messages` 或客户端语言切换。
 
 ---
 
