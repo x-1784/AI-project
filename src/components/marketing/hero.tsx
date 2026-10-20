@@ -26,7 +26,10 @@ export async function Hero() {
   ];
 
   return (
-    <section className="relative isolate overflow-hidden bg-nx-void">
+    <section
+      aria-labelledby="hero-title"
+      className="relative isolate overflow-hidden bg-nx-void"
+    >
       <div className="relative mx-auto mt-8 mb-10 h-[34vh] w-[min(62vw,260px)] sm:h-[38vh] lg:absolute lg:-top-[16%] lg:right-[2%] lg:m-0 lg:h-[120%] lg:w-[50%]">
         <EnergyCoreStage
           className="absolute inset-0"
@@ -38,8 +41,8 @@ export async function Hero() {
         <div className="lg:col-span-5">
           <Badge tone="accent">{t("hero.eyebrow")}</Badge>
 
-          <h1 className="nx-h1 mt-6 text-balance text-nx-ink">
-            <span className="block">{t("hero.titleLine1")}</span>
+          <h1 id="hero-title" className="nx-h1 mt-6 text-balance text-nx-ink">
+            <span className="block">{t("hero.titleLine1")}</span>{" "}
             <span className="block text-nx-ink-2">{t("hero.titleLine2")}</span>
           </h1>
 
