@@ -1,7 +1,5 @@
 import { getTranslations } from "next-intl/server";
 
-import "./marketing.css";
-
 /**
  * 品牌宣言。构图依据 docs/design/HOME_IA.md §6.1：
  * 左 8 列一句大字，右 4 列三行态度短句。

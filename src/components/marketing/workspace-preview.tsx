@@ -3,8 +3,6 @@ import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 
-import "./marketing.css";
-
 /**
  * 工作台预览。构图依据 docs/design/HOME_IA.md §5。
  *
