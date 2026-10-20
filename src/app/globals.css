@@ -50,6 +50,7 @@
   --text-caption--line-height: 1.4;
 
   --tracking-nx-caption: 0.12em;
+  --tracking-nx-brand: 0.28em;
 
   --shadow-nx-lift: 0 24px 60px -24px rgba(0, 0, 0, 0.85);
 }
@@ -98,15 +99,11 @@ html {
 
 body {
   min-height: 100dvh;
+  /* 单光源：只保留左上，右侧环境亮度交给 3D 光晕（DESIGN_TOKENS §5.5） */
   background:
     radial-gradient(
       60rem 40rem at 15% -10%,
-      rgba(91, 140, 255, 0.16),
-      transparent 60%
-    ),
-    radial-gradient(
-      50rem 36rem at 90% 10%,
-      rgba(155, 107, 255, 0.12),
+      color-mix(in srgb, var(--nx-electric) 16%, transparent),
       transparent 60%
     ),
     var(--background);

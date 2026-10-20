@@ -50,7 +50,7 @@ export default async function HomePage() {
   const t = await getTranslations("Home");
 
   return (
-    <section className="relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-24 sm:py-32">
+    <section className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 py-24 sm:px-8 sm:py-32">
       <p className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-[0.7rem] font-medium tracking-[0.2em] text-muted">
         <span
           className="size-1.5 rounded-full bg-accent-strong"
