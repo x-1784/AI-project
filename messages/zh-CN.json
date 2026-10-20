@@ -17,7 +17,65 @@
     "badge": "AI CREATIVE UNIVERSE",
     "title": "让创意进入下一个维度",
     "subtitle": "将 AI 对话、创意生成、知识处理和个人工作空间，融合进同一个沉浸式创作宇宙。",
-    "status": "基础框架已就绪。首页视觉与 AI 工作台将在后续阶段逐步开放。"
+    "status": "基础框架已就绪。首页视觉与 AI 工作台将在后续阶段逐步开放。",
+    "hero": {
+      "eyebrow": "AI CREATIVE UNIVERSE",
+      "titleLine1": "把想法",
+      "titleLine2": "发射出去",
+      "lead": "一句话交给 NEBULA，从构思到成稿。",
+      "composerPlaceholder": "描述你想创作的东西…",
+      "composerHint": "⌘K 与 NEBULA 对话",
+      "send": "发送",
+      "quickLabel": "常用入口",
+      "quick": {
+        "write": "写作",
+        "summarize": "总结",
+        "code": "代码",
+        "image": "图像"
+      }
+    },
+    "core": {
+      "ariaLabel": "NEBULA 能量核心",
+      "fallbackLabel": "能量核心静态预览"
+    },
+    "capabilities": {
+      "eyebrow": "能力",
+      "title": "从一句话，到一件完整作品",
+      "lead": "写作、总结、代码与图像，在同一个创作宇宙里连续完成。",
+      "index": "01 — 04",
+      "primary": {
+        "title": "写作",
+        "body": "从提纲到成稿，保留你的语气和判断。"
+      },
+      "item": {
+        "summarize": "总结",
+        "code": "代码",
+        "image": "图像"
+      },
+      "flow": {
+        "idea": "构思",
+        "generate": "生成",
+        "refine": "打磨",
+        "finish": "定稿"
+      }
+    },
+    "workspace": {
+      "eyebrow": "工作台",
+      "title": "想法、对话与作品，留在同一个空间",
+      "body": "会话、草稿和生成结果不再散落在不同工具里。",
+      "previewBadge": "界面预览 · 非真实数据",
+      "previewAriaLabel": "NEBULA 工作台界面预览"
+    },
+    "manifesto": {
+      "title": "创作不是填表，是让想法获得形状。",
+      "point1": "一个入口，承接从灵感到成稿的全过程。",
+      "point2": "AI 负责扩展，你保留判断。",
+      "point3": "每一次创作，都沉淀为可复用的资产。"
+    },
+    "cta": {
+      "title": "下一个想法，从这里开始。",
+      "button": "开始创作"
+    }
   },
   "Footer": {
     "rights": "© NEBULA AI",

@@ -33,12 +33,14 @@ export async function generateMetadata({
       languages: {
         "zh-CN": "/zh-CN",
         en: "/en",
+        "x-default": "/zh-CN",
       },
     },
     openGraph: {
       title,
       description,
       locale: locale === "zh-CN" ? "zh_CN" : "en_US",
+      alternateLocale: locale === "zh-CN" ? "en_US" : "zh_CN",
       siteName: "NEBULA AI",
       type: "website",
       url: `/${locale}`,
