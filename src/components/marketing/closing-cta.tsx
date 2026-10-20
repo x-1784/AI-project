@@ -1,7 +1,5 @@
 import { getTranslations } from "next-intl/server";
 
-import "./marketing.css";
-
 /**
  * 收尾 CTA。构图依据 docs/design/HOME_IA.md §6.2：居中单列、最大 6 列宽，
  * 点击回到首屏输入框。

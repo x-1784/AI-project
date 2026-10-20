@@ -2,8 +2,6 @@ import { getTranslations } from "next-intl/server";
 
 import { Panel } from "@/components/ui/panel";
 
-import "./marketing.css";
-
 /** 能力展示。构图依据 docs/design/HOME_IA.md §4：7 + 5 不对称双列 + 一条流程带。 */
 export async function Capabilities() {
   const t = await getTranslations("Home");

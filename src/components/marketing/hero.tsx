@@ -4,7 +4,6 @@ import { EnergyCoreStage } from "@/components/three/energy-core-stage";
 import { Badge } from "@/components/ui/badge";
 
 import { HeroComposer } from "./hero-composer";
-import "./marketing.css";
 
 /**
  * 首屏。
