@@ -494,7 +494,7 @@ pnpm start
 - `main` 只接受来自 `dev` 的发布 PR。
 - 功能 PR 使用 Squash Merge；`dev → main` 发布使用 Merge Commit。
 - 合并后删除源分支。
-- 每个 PR 至少 1 人 approve，所有 review conversation 解决；在 CI 可用时必须通过 `quality` 检查后才能合并。
+- 每个 PR 至少 1 人 approve，所有 review conversation 解决，并通过 `quality` 状态检查后才能合并。
 - 不允许自己 approve 自己的 PR。
 - 不对共享分支强制推送；不对 `main`/`dev` 做历史重写。
 - 功能分支命名：`feat/...`、`fix/...`、`docs/...`、`chore/...`、`refactor/...`。
@@ -504,7 +504,7 @@ pnpm start
   - 均要求 PR、至少 1 个 approve、解决全部 review conversation；
   - `dev` 要求线性历史（Squash Merge），`main` 允许发布时使用 Merge Commit；
   - 管理员暂未被强制限制，但仅允许在紧急情况下绕过，并必须在 PR/Issue 中说明原因；
-  - CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 与 `dev@801c4a1` 的 run `39425381720` 已通过。`quality` 已具备设为必需检查的条件，待阶段 2 开始前启用。
+  - CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 与 `dev@801c4a1` 的 run `39425381720` 已通过。2026-10-20 已把 `quality` 设为 `dev` 的必需状态检查，并要求 PR 分支与最新 `dev` 同步（P2-INFRA-01 #24）。
   - PR #7 合并前因工作流刚恢复没有 CI 结果；合并后 `dev` 的 push CI 已通过。后续 PR 必须在 PR 上通过 `quality` 后再合并，不能把“合并后 dev CI 通过”当作“PR 合并前已通过”。
   - 本地检查仍是 PR 的最低要求：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果。
   - “Require review from Code Owners”暂不启用：当前 `CLAUDE.md`、`docs/`、`.github/` 的 owner 只有 @x-1784，启用后 @x-1784 自己的文档 PR 无法获批。等这些路径至少有两个共同 owner 后再考虑启用。
@@ -554,7 +554,7 @@ pnpm start
 9. ✅ 阶段 1 正式验收：PR #8 已合并（`801c4a1`），Issue #3 已关闭，用户已确认；
 10. ✅ 阶段 2 计划已通过 PR #10 合入 `dev`（`ade9224`）；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21、#24 已创建；
 11. 🚧 各角色按 Issue 领取：P2-INFRA-01 #24、P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`；@BJSH-1 从最新 `dev` 重做 3D/首页移植；
-12. ⏳ 把 `quality` 设为 `dev` 的必需状态检查。
+12. ✅ 已把 `quality` 设为 `dev` 的必需状态检查，并要求分支与最新 `dev` 同步（2026-10-20，P2-INFRA-01 #24）。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。
 

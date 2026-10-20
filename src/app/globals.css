@@ -8,23 +8,87 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
+
+  /* docs/design/DESIGN_TOKENS.md 的 nx-* 语义色 */
+  --color-nx-void: var(--nx-void);
+  --color-nx-abyss: var(--nx-abyss);
+  --color-nx-deep: var(--nx-deep);
+  --color-nx-shelf: var(--nx-shelf);
+  --color-nx-glass: var(--nx-glass);
+  --color-nx-ink: var(--nx-ink);
+  --color-nx-ink-2: var(--nx-ink-2);
+  --color-nx-ink-3: var(--nx-ink-3);
+  --color-nx-ink-4: var(--nx-ink-4);
+  --color-nx-electric: var(--nx-electric);
+  --color-nx-electric-deep: var(--nx-electric-deep);
+  --color-nx-nebula: var(--nx-nebula);
+  --color-nx-ion: var(--nx-ion);
+  --color-nx-line-hair: var(--nx-line-hair);
+  --color-nx-line-base: var(--nx-line-base);
+  --color-nx-line-strong: var(--nx-line-strong);
+  --color-nx-line-accent: var(--nx-line-accent);
 }
 
 @theme {
   --font-sans:
     "Inter", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     system-ui, sans-serif;
+
+  /* 仅收入组件当前用到的尺寸 token，避免提前定义一堆未使用的值 */
+  --radius-nx-sm: 4px;
+  --radius-nx-md: 8px;
+  --radius-nx-lg: 12px;
+  --radius-nx-card: 18px;
+  --radius-nx-xl: 28px;
+  --radius-nx-pill: 999px;
+
+  --text-ui: 14px;
+  --text-ui--line-height: 1.45;
+  --text-body: 16px;
+  --text-body--line-height: 1.7;
+  --text-caption: 12px;
+  --text-caption--line-height: 1.4;
+
+  --tracking-nx-caption: 0.12em;
+
+  --shadow-nx-lift: 0 24px 60px -24px rgba(0, 0, 0, 0.85);
 }
 
 :root {
   color-scheme: dark;
+
+  /* 背景阶梯 */
+  --nx-void: #04050a;
+  --nx-abyss: #070a12;
+  --nx-deep: #0b0f1a;
+  --nx-shelf: #111726;
+  --nx-glass: rgba(14, 19, 36, 0.72);
+
+  /* 文字层级 */
+  --nx-ink: #ecf0f8;
+  --nx-ink-2: #a5afc2;
+  --nx-ink-3: #7a859c;
+  --nx-ink-4: #434c5e;
+
+  /* 强调色：紫色只允许出现在 3D 外缘 */
+  --nx-electric: #4b8cff;
+  --nx-electric-deep: #2b5fd9;
+  --nx-nebula: #8b5cf6;
+  --nx-ion: #6fe3ff;
+
+  /* 描边 */
+  --nx-line-hair: rgba(255, 255, 255, 0.06);
+  --nx-line-base: rgba(255, 255, 255, 0.1);
+  --nx-line-strong: rgba(255, 255, 255, 0.18);
+  --nx-line-accent: rgba(75, 140, 255, 0.4);
+
   --background: #05060b;
   --foreground: #e9edf8;
   --muted: #99a3bd;
   --surface: rgba(14, 19, 36, 0.72);
   --border: rgba(130, 150, 205, 0.18);
-  --accent: #6ea0ff;
-  --accent-strong: #a78bfa;
+  --accent: var(--nx-electric);
+  --accent-strong: var(--nx-electric-deep);
 }
 
 html {
