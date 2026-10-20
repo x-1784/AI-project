@@ -197,7 +197,7 @@ NEBULA AI 不是课程作业、静态展示页或套了深色主题的聊天机�
 - shadcn/ui（按需引入）；
 - lucide-react；
 - next-intl；
-- Three.js + React Three Fiber + Drei；
+- Three.js（裸用，不引入 React Three Fiber / Drei）；
 - Zod；
 - Vercel AI SDK + OpenAI-compatible provider；
 - PostgreSQL（阶段 5）；

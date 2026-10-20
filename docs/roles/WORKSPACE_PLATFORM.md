@@ -62,7 +62,7 @@
 
 - [x] 确认团队分工和文档合并；
 - [x] 用 pnpm 初始化 Next.js App Router + TypeScript + Tailwind + ESLint；
-- [x] 锁定兼容版本，避免 React 与 R3F 版本冲突；
+- [x] 锁定兼容版本，避免 React 与 3D 依赖版本冲突；
 - [x] 建立目录结构和路径别名；
 - [x] 建立设计 token、全局背景和字体基线；
 - [x] 建立 `messages/zh-CN.json` 与 `messages/en.json`；
