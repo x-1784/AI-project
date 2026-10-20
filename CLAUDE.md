@@ -2,7 +2,7 @@
 
 > 本文件是本项目内 AI Agent 的最高优先级开发指令。
 > 在本仓库中开始任何工作前，必须先阅读并遵守本文件。
-> 最后更新：2026-10-20（阶段 1 文档修正）
+> 最后更新：2026-10-20（阶段 1 收尾与验收）
 
 ---
 
@@ -27,9 +27,9 @@
 
 ## 2. 当前阶段与阶段门禁
 
-**当前阶段：阶段 1（项目基础设施），脚手架已合入 `dev`（PR #4，`883613b`），CI 尚未成功运行，等待本地复验与文档修正。**
+**当前阶段：阶段 1（项目基础设施）技术验收已通过，`dev@a5b2f46`；等待用户确认正式验收。阶段 2 尚未开始。**
 
-> 2026-10-20 更新：团队文档已合入 `dev`（PR #1）；阶段 1 脚手架已合入 `dev`（PR #4，`883613b`）。GitHub Actions 的 `quality` 工作流仍处于排队状态，**CI 结果不能视为通过**；需完成本地复验、文档修正和 CI 恢复后再确认阶段 1 验收。
+> 2026-10-20 更新：PR #1、#4、#5、#6、#7 已合入 `dev`；`dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build、`/` → `/zh-CN`、`/en`、`/api/health` 已复验。阶段 1 的正式验收还差本总结 PR 合并与 Issue #3 关闭；在用户确认前不要进入阶段 2。详见 `docs/PHASE1_SUMMARY.md`。
 
 阶段门禁规则：
 
@@ -417,9 +417,9 @@ pnpm start
 - pnpm：`11.22.0`（与 `package.json` 的 `packageManager` 一致；以 `pnpm -v` 实测为准）
 - Git：`2.55.0`
 - npm registry：`https://registry.npmmirror.com`
-- Git 仓库已初始化并关联远程；阶段 1 脚手架已合入 `dev`（`883613b`）。
+- Git 仓库已初始化并关联远程；最新 `dev` 为 `a5b2f46`，阶段 1 技术验收已通过。
 - 本地依赖通过 `pnpm install` 安装，锁文件为 `pnpm-lock.yaml`；`pnpm-workspace.yaml` 已放行 `@parcel/watcher` 与 `@swc/core` 的构建脚本（next-intl 工具链需要）。
-- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI 尚未成功运行。
+- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI run `39423560729` 已在 `dev@a5b2f46` 通过。
 
 环境注意事项：
 
@@ -462,8 +462,11 @@ pnpm start
 - 集成分支：`dev`
 - 协作者：`@x-1784`（admin）、`@BJSH-1`（write）、`@Nanami1-1`（write）
 - 团队文档已通过 PR #1 合入 `dev`（2026-10-19）
-- 阶段 1 脚手架已通过 PR #4 合入 `dev`（2026-10-19，合并提交 `883613b`）；源分支已删除
-- 当前文档修正工作分支：`docs/fix-ownership-and-status`，目标分支 `dev`
+- 阶段 1 脚手架已通过 PR #4 合入 `dev`（2026-10-19，合并提交 `883613b`）
+- Issue #3 文档修正已通过 PR #5 合入 `dev`（合并提交 `a525397`）
+- AI 契约层已通过 PR #6 合入 `dev`（合并提交 `2215084`）
+- `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，合并提交 `a5b2f46`）；源分支已删除
+- 当前阶段总结工作分支：`docs/phase1-closeout`，目标分支 `dev`
 
 ### 16.2 团队分工（默认建议，可协商互换）
 
@@ -499,8 +502,9 @@ pnpm start
   - 均要求 PR、至少 1 个 approve、解决全部 review conversation；
   - `dev` 要求线性历史（Squash Merge），`main` 允许发布时使用 Merge Commit；
   - 管理员暂未被强制限制，但仅允许在紧急情况下绕过，并必须在 PR/Issue 中说明原因；
-  - CI 工作流已随阶段 1 PR 添加；当前 Actions 运行仍处于排队状态，尚未成功完成，因此暂未把 `quality` 设为 `dev` 的必需状态检查。CI 恢复并成功运行后再启用。
-  - CI 未成功运行前，PR 必须由执行 AI 在本地运行 `pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果，不能声称 CI 已通过。
+  - CI 工作流已恢复；`dev@a5b2f46` 的 run `39423560729` 已通过。`quality` 已具备设为必需检查的条件，待阶段 1 正式验收时启用。
+  - PR #7 合并前因工作流刚恢复没有 CI 结果；合并后 `dev` 的 push CI 已通过。后续 PR 必须在 PR 上通过 `quality` 后再合并，不能把“合并后 dev CI 通过”当作“PR 合并前已通过”。
+  - 本地检查仍是 PR 的最低要求：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`，并在 PR 中写明实际结果。
   - “Require review from Code Owners”暂不启用：当前 `CLAUDE.md`、`docs/`、`.github/` 的 owner 只有 @x-1784，启用后 @x-1784 自己的文档 PR 无法获批。等这些路径至少有两个共同 owner 后再考虑启用。
 
 ### 16.4 共享文件与所有权
@@ -538,12 +542,15 @@ pnpm start
 ### 16.6 当前落地顺序
 
 1. ✅ 合并团队文档 PR 到 `dev`（2026-10-19，PR #1，`@Nanami1-1` approve）；
-2. 三人最终确认分工（PR #1 已由 `@Nanami1-1` 通过评审）；
+2. ✅ 三人最终确认分工（PR #1 已由 `@Nanami1-1` 通过评审）；
 3. ✅ 已配置 `main`/`dev` 分支保护与仓库合并策略（2026-10-19）；
 4. ✅ 阶段 1 脚手架已通过 PR #4 合入 `dev`（2026-10-19，`883613b`）；
-5. 🚧 CI `quality` 工作流尚未成功运行；先在最新 `dev` 上完成本地复验，再恢复 CI；
-6. 🚧 完成 `/api/health` 小 PR、Issue #3 文档修正和阶段 1 验收后，才进入阶段 2；
-7. CI 恢复后，把 `quality` 设为 `dev` 的必需状态检查。
+5. ✅ Issue #3 文档修正已通过 PR #5 合入 `dev`（`a525397`）；
+6. ✅ AI 契约层已通过 PR #6 合入 `dev`（`2215084`）；
+7. ✅ `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，`a5b2f46`）；
+8. ✅ `dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过；
+9. 🚧 阶段 1 正式验收：合并本总结 PR、关闭 Issue #3、把 `quality` 设为 `dev` 必需检查；
+10. ⏳ 用户确认阶段 1 后，才进入阶段 2；@BJSH-1 从最新 `dev` 重做 3D/首页移植。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。
 
@@ -572,3 +579,4 @@ pnpm start
 - 判定标准：在 `src/`、`messages/`、根配置、`.github/` 下新增或修改文件属于“施工”；写 Issue、PR 描述、设计文档、契约草案属于“准备”；
 - 脚手架合入后，各角色再从最新 `dev` 切出自己的功能分支；
 - 阶段 1 的脚手架由 **@x-1784 的基础设施执行 AI** 完成，工作分支为 `chore/phase1-scaffold`（已合并）。协调 AI（Claude Code）只负责规划、裁定、评审和集成，不直接改文件或提交；这一边界以用户最新指令为准。
+- 2026-10-20：用户明确授权协调 AI 执行阶段 1 收尾与总结文档更新；该授权仅限文档、验证和总结，不扩展到业务代码或 PR 合并。

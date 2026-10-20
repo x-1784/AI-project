@@ -58,29 +58,31 @@
 
 ## 3. 分阶段任务
 
-### 阶段 1：基础设施
+### 阶段 1：基础设施（已完成技术验收）
 
-- [ ] 确认团队分工和文档合并；
-- [ ] 用 pnpm 初始化 Next.js App Router + TypeScript + Tailwind + ESLint；
-- [ ] 锁定兼容版本，避免 React 与 R3F 版本冲突；
-- [ ] 建立目录结构和路径别名；
-- [ ] 建立设计 token、全局背景和字体基线；
-- [ ] 建立 `messages/zh-CN.json` 与 `messages/en.json`；
-- [ ] 配置 next-intl：
-  - [ ] `zh-CN` 为默认；
-  - [ ] `/` 跳转 `/zh-CN`；
-  - [ ] 关闭 Accept-Language 自动检测；
-  - [ ] 用户显式切换后写入 Cookie；
-  - [ ] 非法 locale 返回 404；
-- [ ] 建立导航、页脚、语言切换；
-- [ ] 建立错误边界、加载状态、404；
-- [ ] 建立 `/api/health` 的最小实现（@Nanami1-1 提供响应契约）；
-- [ ] 编写 `.env.example`、README、启动说明；
-- [ ] 添加 `.gitignore`、`.gitattributes`；
-- [ ] 添加 CI 工作流；
-- [ ] 配置 `main`/`dev` 分支保护；
-- [ ] 运行 `pnpm lint`、`pnpm typecheck`、`pnpm build`；
-- [ ] 实际验证中英文和根路径跳转。
+- [x] 确认团队分工和文档合并；
+- [x] 用 pnpm 初始化 Next.js App Router + TypeScript + Tailwind + ESLint；
+- [x] 锁定兼容版本，避免 React 与 R3F 版本冲突；
+- [x] 建立目录结构和路径别名；
+- [x] 建立设计 token、全局背景和字体基线；
+- [x] 建立 `messages/zh-CN.json` 与 `messages/en.json`；
+- [x] 配置 next-intl：
+  - [x] `zh-CN` 为默认；
+  - [x] `/` 跳转 `/zh-CN`；
+  - [x] 关闭 Accept-Language 自动检测；
+  - [x] 用户显式切换后写入 Cookie；
+  - [x] 非法 locale 最终返回 404（`/fr` 会先 307 到 `/zh-CN/fr`，记录为阶段 2 小修）；
+- [x] 建立导航、页脚、语言切换；
+- [x] 建立错误边界、加载状态、404；
+- [x] 建立 `/api/health` 的最小实现（@Nanami1-1 提供响应契约）；
+- [x] 编写 `.env.example`、README、启动说明；
+- [x] 添加 `.gitignore`、`.gitattributes`；
+- [x] 添加 CI 工作流；
+- [x] 配置 `main`/`dev` 分支保护；
+- [x] 运行 `pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build`；
+- [x] 实际验证中英文和根路径跳转。
+
+> 阶段 1 技术验收记录见 `docs/PHASE1_SUMMARY.md`；语言切换按钮的实际点击与多尺寸视觉检查在阶段 2 首页实现时补做。
 
 ### 阶段 3：AI 工作台 UI
 
@@ -214,12 +216,12 @@ pnpm build
 ## 8. 接手后的第一批任务
 
 1. 阅读共享文档和本文件；
-2. 确认当前分支和远程状态（最新 `dev` 为 `883613b`）；
-3. 完成阶段 1 的本地复验：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 i18n 冒烟；
-4. 合并 Issue #3 的文档修正 PR；
-5. 提交 `/api/health` 小 PR（@Nanami1-1 提供契约）；
-6. CI 恢复并成功运行后，把 `quality` 设为 `dev` 的必需状态检查；
-7. 阶段 1 验收通过后，再推进阶段 2。
+2. 确认当前分支和远程状态（最新 `dev` 为 `a5b2f46`）；
+3. 阶段 1 本地复验已完成：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 i18n 冒烟通过；记录见 `docs/PHASE1_SUMMARY.md`；
+4. Issue #3 文档修正已通过 PR #5 合并；等待 @Nanami1-1 确认关闭；
+5. `/api/health` 已通过 PR #7 合并；CI run `39423560729` 通过；
+6. 阶段 1 正式验收时把 `quality` 设为 `dev` 的必需状态检查；
+7. 用户确认阶段 1 后，再推进阶段 2。
 
 ---
 
@@ -232,5 +234,5 @@ pnpm build
 - ❌ 跳过 PR 直接推送 `main`/`dev`；
 - ❌ 在 CI 中放真实 AI 密钥；
 - ❌ 为了赶进度省略类型检查、测试或构建；
-- ❌ 在 CI 未成功运行时声称 CI 已通过；
+- ❌ 在 CI 未运行或未通过时声称 CI 已通过；
 - ❌ 把“能运行”当成“已完成”。

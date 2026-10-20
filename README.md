@@ -2,7 +2,7 @@
 
 **AI Creative Universe** — 将 AI 对话、创意生成、知识处理和个人工作空间融合在一起的沉浸式 AI 创作平台。
 
-> 项目状态：阶段 1（基础设施）。脚手架已合入 `dev`（PR #4，`883613b`）；CI `quality` 仍在排队，等待本地复验与文档修正。
+> 项目状态：阶段 1（基础设施）技术验收已通过，`dev@a5b2f46`，CI run `39423560729` 成功；等待用户确认正式验收，阶段 2 尚未开始。详见 [阶段 1 总结](docs/PHASE1_SUMMARY.md)。
 
 ---
 
@@ -13,6 +13,7 @@
 | 文档 | 用途 |
 | --- | --- |
 | [项目总体说明](docs/PROJECT_BRIEF.md) | 产品目标、视觉方向、技术架构、功能范围、阶段验收 |
+| [阶段 1 总结](docs/PHASE1_SUMMARY.md) | 阶段交付、验证记录、验收结论与阶段 2 入口 |
 | [团队分工与协作](docs/TEAM_PLAYBOOK.md) | 三人分工、分支模型、PR、评审、CI、文件所有权 |
 | [AI 接手说明](docs/AI_ONBOARDING.md) | 任何 AI 开始工作前的必读规则和启动提示词 |
 | [角色分配](docs/roles/README.md) | 三位成员的角色、目录和对应角色文档 |
@@ -61,8 +62,8 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 
 ```text
 阶段 0 规划与团队接手      ← 已完成
-阶段 1 基础设施            ← 当前
-阶段 2 首页与 3D
+阶段 1 基础设施            ← 技术验收通过，待用户确认
+阶段 2 首页与 3D            ← 尚未开始
 阶段 3 AI 工作台 UI
 阶段 4 真实 AI 服务
 阶段 5 数据库与用户系统
@@ -75,10 +76,11 @@ dev         ← 集成分支，所有功能/修复 PR 的目标
 - next-intl 中英文路由，默认 `zh-CN`，根路径跳转 `/zh-CN`；
 - 深空主题设计 token、导航、页脚、语言切换；
 - 双语错误状态、加载状态、404 与 catch-all；
-- 阶段 1 基础设施与 CI；`src/app/api/health/**` 归 @x-1784，@Nanami1-1 提供响应契约；
-- `/api/health` 尚未实现，作为阶段 1 收尾的小 PR；
+- `src/lib/ai/` 服务端契约层（PR #6），不含真实 AI 调用；
+- `/api/health` 健康检查（PR #7）：200、`Cache-Control: no-store`、动态 timestamp；
 - `.env.example`、README、GitHub Actions CI；
-- PR #4 描述了本地开发服务器、lint、typecheck 和生产构建验证；CI 尚未成功运行，需在最新 `dev` 上复验。
+- `src/app/api/health/**` 归 @x-1784，@Nanami1-1 提供响应契约；
+- `dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过。
 
 阶段 2 开始前，首页视觉和 3D 场景仍由 @BJSH-1 负责，其他成员不要提前生成完整首页。
 
