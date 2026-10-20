@@ -203,8 +203,30 @@ const CORE_SCALE = 0.82;
 const GLOW_SCALE = 2.5;
 
 const PRESET = {
-  full: { detail: 28, maxDpr: 1.5, particles: 1800, rings: 3 },
-  reduced: { detail: 16, maxDpr: 1.0, particles: 320, rings: 0 },
+  /* animate：是否跑 requestAnimationFrame。
+     静态档画面本来就不动，继续每帧 render() 等于白烧 GPU。 */
+  full: {
+    detail: 28,
+    maxDpr: 1.5,
+    particles: 1800,
+    rings: 3,
+    animate: true,
+  },
+  /* 窄屏档，数值来自 docs/design/HOME_IA.md §7.2：粒子 800、DPR 上限 1.25 */
+  compact: {
+    detail: 22,
+    maxDpr: 1.25,
+    particles: 800,
+    rings: 2,
+    animate: true,
+  },
+  reduced: {
+    detail: 16,
+    maxDpr: 1.0,
+    particles: 320,
+    rings: 0,
+    animate: false,
+  },
 } as const;
 
 type Props = {
@@ -239,7 +261,8 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
     const uniforms = {
       uTime: { value: 0 },
       uAmp: { value: 0.03 },
-      uBandSpeed: { value: intensity === "full" ? 0.34 : 0 },
+      /* 静态档把色带流速归零，动态档（含窄屏档）保持原有速度 */
+      uBandSpeed: { value: intensity === "reduced" ? 0 : 0.34 },
       uColorA: { value: new THREE.Color("#0B1030") },
       uColorB: { value: new THREE.Color("#2B5FD9") },
       uColorC: { value: new THREE.Color("#8B5CF6") },
@@ -356,6 +379,24 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
     }
     inner.add(ringGroup);
 
+    /* 指针视差：只写 ref，不触发 React 状态更新 */
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const onPointerMove = (e: PointerEvent) => {
+      pointer.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      pointer.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    if (interactive) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    }
+
+    /* 画一帧。静态档靠它出画面，动态档在循环里每帧调用。 */
+    const draw = () => {
+      camera.position.x = pointer.x * 0.1;
+      camera.position.y = -pointer.y * 0.07;
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+    };
+
     /* 尺寸：跟随容器，不用窗口尺寸 */
     let dpr = 1;
     const resize = () => {
@@ -367,39 +408,29 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+      /* 静态档没有循环，尺寸变化后必须补一帧，否则画布是空的 */
+      if (!preset.animate) draw();
     };
     resize();
 
     const ro = new ResizeObserver(resize);
     ro.observe(host);
 
-    /* 指针视差：只写 ref，不触发 React 状态更新 */
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-    const onPointerMove = (e: PointerEvent) => {
-      pointer.tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      pointer.ty = (e.clientY / window.innerHeight - 0.5) * 2;
-    };
-    if (interactive) {
-      window.addEventListener("pointermove", onPointerMove, { passive: true });
-    }
-
-    /* 渲染循环：页面隐藏即停，回来继续 */
+    /* 两个暂停条件：标签页隐藏、滚出视口。任一满足就停循环。 */
     let raf = 0;
     let time = 0;
     let last = performance.now();
-    let visible = true;
+    let pageVisible = !document.hidden;
+    let inView = true;
+    let running = false;
 
-    const onVisibility = () => {
-      visible = !document.hidden;
-      last = performance.now();
-    };
-    document.addEventListener("visibilitychange", onVisibility);
+    const isPaused = () => !pageVisible || !inView;
 
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      if (!visible) return;
+      if (isPaused()) return;
 
       if (interactive) {
         time += dt;
@@ -411,17 +442,56 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
 
       pointer.x += (pointer.tx - pointer.x) * 0.045;
       pointer.y += (pointer.ty - pointer.y) * 0.045;
-      camera.position.x = pointer.x * 0.1;
-      camera.position.y = -pointer.y * 0.07;
-      camera.lookAt(0, 0, 0);
-
-      renderer.render(scene, camera);
+      draw();
     };
-    raf = requestAnimationFrame(loop);
 
-    /* 卸载：释放事件、动画与全部 GPU 资源 */
+    const start = () => {
+      if (running || !preset.animate) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    };
+
+    const stop = () => {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    /* 从暂停恢复：静态档不会自己重绘，动态档也要重置计时，
+       否则暂停期间累积的时间会让恢复后第一帧跳一下。 */
+    const resume = () => {
+      last = performance.now();
+      if (preset.animate) start();
+      else draw();
+    };
+
+    const onVisibility = () => {
+      pageVisible = !document.hidden;
+      if (isPaused()) stop();
+      else resume();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    /* 滚出视口就停：首屏以下是静态内容，核心没必要继续算。
+       threshold 取 0，刚进入视口就恢复，避免用户看到静止画面。 */
+    const io = new IntersectionObserver(
+      (entries) => {
+        inView = entries[0]?.isIntersecting ?? true;
+        if (isPaused()) stop();
+        else resume();
+      },
+      { threshold: 0 },
+    );
+    io.observe(host);
+
+    if (preset.animate) start();
+    else draw();
+
+    /* 卸载：释放事件、观察者、动画与全部 GPU 资源 */
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
       ro.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onPointerMove);
