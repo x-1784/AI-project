@@ -31,8 +31,11 @@
 
 @theme {
   --font-sans:
-    "Inter", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    system-ui, sans-serif;
+    var(--font-inter), "Inter", "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", system-ui, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), var(--font-inter), "Inter", "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
 
   /* 仅收入组件当前用到的尺寸 token，避免提前定义一堆未使用的值 */
   --radius-nx-sm: 4px;
@@ -90,6 +93,55 @@
   --border: rgba(130, 150, 205, 0.18);
   --accent: var(--nx-electric);
   --accent-strong: var(--nx-electric-deep);
+}
+
+@layer components {
+  /* 版式阶梯来自 docs/design/DESIGN_TOKENS.md §3.7 / §4 */
+  .nx-display {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 8.2vw, 104px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+
+  .nx-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.4vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+  }
+
+  .nx-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+  }
+
+  .nx-lead {
+    font-size: clamp(16px, 1.5vw, 19px);
+    line-height: 1.7;
+    letter-spacing: 0.005em;
+  }
+}
+
+/* 中文不吃负字距；标题行高在拉丁基准上 +0.04。 */
+:lang(zh-CN) .nx-display {
+  letter-spacing: 0;
+  line-height: 1.02;
+}
+
+:lang(zh-CN) .nx-h1 {
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+:lang(zh-CN) .nx-h2 {
+  letter-spacing: 0;
+  line-height: 1.19;
 }
 
 html {
