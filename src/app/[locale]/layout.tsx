@@ -41,7 +41,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-surface focus:px-4 focus:py-2 focus:text-sm focus:text-foreground"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-surface focus:px-4 focus:py-2 focus:text-ui focus:text-foreground"
           >
             {t("skipToContent")}
           </a>
@@ -51,7 +51,7 @@ export default async function LocaleLayout({
               id="main-content"
               tabIndex={-1}
               // 跳到正文后让出 sticky header 的高度，避免标题被遮住。
-              className="flex-1 scroll-mt-16"
+              className="flex-1 scroll-mt-[calc(4rem+1px)]"
             >
               {children}
             </main>

@@ -50,6 +50,7 @@
   --text-caption--line-height: 1.4;
 
   --tracking-nx-caption: 0.12em;
+  --tracking-nx-brand: 0.28em;
 
   --shadow-nx-lift: 0 24px 60px -24px rgba(0, 0, 0, 0.85);
 }
@@ -102,7 +103,7 @@ body {
   background:
     radial-gradient(
       60rem 40rem at 15% -10%,
-      rgba(75, 140, 255, 0.16),
+      color-mix(in srgb, var(--nx-electric) 16%, transparent),
       transparent 60%
     ),
     var(--background);
