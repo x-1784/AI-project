@@ -27,9 +27,9 @@
 
 ## 2. 当前阶段与阶段门禁
 
-**当前阶段：阶段 1（项目基础设施）已正式验收通过，`dev@801c4a1`。阶段 2 可以开始规划，但实现任务需先完成计划、Issue 拆分和任务领取流程。**
+**当前阶段：阶段 2（首页与视觉原型），计划已合入 `dev@2be2a69`；Issue #11–#22、#24 已创建，按 Issue 领取任务。**
 
-> 2026-10-20 更新：PR #1、#4、#5、#6、#7、#8 已合入 `dev`；`dev@801c4a1` 的 CI run `39425381720` 全流程通过；本地 format/lint/typecheck/build、`/` → `/zh-CN`、`/en`、`/api/health` 已复验；Issue #3 已关闭；用户已确认阶段 1 正式验收。阶段 2 先做计划与任务拆分，不要并行开工。详见 `docs/PHASE1_SUMMARY.md`。
+> 2026-10-20 更新：阶段 1 已正式验收通过；阶段 2 计划已合入 `dev`；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21、#24 已创建。P2-INFRA-01 #24、P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`，其余任务按依赖逐步开放。阶段 2 不实现 `/api/chat`、真实 AI、数据库或认证。详见 `docs/PHASE2_PLAN.md`。
 
 阶段门禁规则：
 
@@ -417,9 +417,9 @@ pnpm start
 - pnpm：`11.22.0`（与 `package.json` 的 `packageManager` 一致；以 `pnpm -v` 实测为准）
 - Git：`2.55.0`
 - npm registry：`https://registry.npmmirror.com`
-- Git 仓库已初始化并关联远程；最新 `dev` 为 `801c4a1`，阶段 1 正式验收已通过。
+- Git 仓库已初始化并关联远程；最新 `dev` 为 `2be2a69`，阶段 1 已正式验收，阶段 2 已启动。
 - 本地依赖通过 `pnpm install` 安装，锁文件为 `pnpm-lock.yaml`；`pnpm-workspace.yaml` 已放行 `@parcel/watcher` 与 `@swc/core` 的构建脚本（next-intl 工具链需要）。
-- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI run `39423560729` 在代码基线 `dev@a5b2f46` 通过，`dev@801c4a1` 的 run `39425381720` 也通过。
+- 阶段 1 生产构建与冒烟验证使用 `pnpm start -p 3100`；CI run `39423560729` 在代码基线 `dev@a5b2f46` 通过，`dev@801c4a1` 的 run `39425381720` 也通过；阶段 2 计划 PR #10 的 CI 已通过。
 
 环境注意事项：
 
@@ -467,7 +467,8 @@ pnpm start
 - AI 契约层已通过 PR #6 合入 `dev`（合并提交 `2215084`）
 - `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，合并提交 `a5b2f46`）；源分支已删除
 - 阶段 1 收尾总结已通过 PR #8 合入 `dev`（2026-10-20，合并提交 `801c4a1`）；源分支已删除
-- 阶段 1 已正式验收；阶段 2 规划分支待创建
+- 阶段 1 正式验收状态已通过 PR #9 合入 `dev`（合并提交 `2be2a69`）
+- 阶段 2 计划已通过 PR #10 合入 `dev`（合并提交 `ade9224`）；总追踪 Issue #22 和子 Issue #11–#21、#24 已创建
 
 ### 16.2 团队分工（默认建议，可协商互换）
 
@@ -551,8 +552,9 @@ pnpm start
 7. ✅ `/api/health` 已通过 PR #7 合入 `dev`（2026-10-20，`a5b2f46`）；
 8. ✅ `dev@a5b2f46` 的 CI run `39423560729` 全流程通过；本地 format/lint/typecheck/build 与 i18n 冒烟通过；
 9. ✅ 阶段 1 正式验收：PR #8 已合并（`801c4a1`），Issue #3 已关闭，用户已确认；
-10. 🚧 阶段 2 准备：提交 `docs/PHASE2_PLAN.md`、拆分 Issue、建立领取协议；把 `quality` 设为 `dev` 必需检查；
-11. ⏳ 阶段 2 任务开放后，各角色按 Issue 领取；@BJSH-1 从最新 `dev` 重做 3D/首页移植。
+10. ✅ 阶段 2 计划已通过 PR #10 合入 `dev`（`ade9224`）；里程碑、标签、总追踪 Issue #22 和子 Issue #11–#21、#24 已创建；
+11. 🚧 各角色按 Issue 领取：P2-INFRA-01 #24、P2-DESIGN-01 #11、P2-CONTRACT-01 #20、P2-REVIEW-01 #21 已 `status:ready`；@BJSH-1 从最新 `dev` 重做 3D/首页移植；
+12. ⏳ 把 `quality` 设为 `dev` 的必需状态检查。
 
 > 团队文档入口：`README.md`、`docs/PROJECT_BRIEF.md`、`docs/TEAM_PLAYBOOK.md`、`docs/AI_ONBOARDING.md`、`docs/roles/`。
 

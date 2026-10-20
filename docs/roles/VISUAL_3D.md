@@ -163,10 +163,10 @@ src/components/three/
 
 1. 阅读共享文档和本文件；
 2. 用中文汇报你对视觉方向、3D 方案和角色边界的理解；
-3. 检查当前分支是否基于最新 `dev`（当前 `801c4a1`）；
+3. 检查当前分支是否基于最新 `dev`（当前 `2be2a69`）；
 4. 提出设计 token 草案和首页构图草图（文字描述即可）；
 5. 提出 3D 组件树、性能预算和降级方案；
-6. 阶段 1 已正式验收；从最新 `dev` 新建 `feat/phase2-hero-3d` 做阶段 2；
+6. 阶段 2 计划已合入；先领取 [#11 P2-DESIGN-01](https://github.com/x-1784/AI-project/issues/11)，依赖完成后再按 [#22 总览](https://github.com/x-1784/AI-project/issues/22) 领取 #12/#13/#14/#15；
 7. 只移植 `src/components/three/**`、`src/components/marketing/**`、`public/fonts/**`、设计 token 和首页视觉；不要合并旧 `BJSH` 分支的根布局、`package.json`、lockfile、`messages` 或客户端语言切换。
 
 ---

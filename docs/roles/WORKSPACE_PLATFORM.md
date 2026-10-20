@@ -216,12 +216,12 @@ pnpm build
 ## 8. 接手后的第一批任务
 
 1. 阅读共享文档和本文件；
-2. 确认当前分支和远程状态（最新 `dev` 为 `801c4a1`）；
+2. 确认当前分支和远程状态（最新 `dev` 为 `2be2a69`）；
 3. 阶段 1 本地复验已完成：`pnpm format:check`、`pnpm lint`、`pnpm typecheck`、`pnpm build` 和 i18n 冒烟通过；记录见 `docs/PHASE1_SUMMARY.md`；
 4. Issue #3 已关闭；
-5. `/api/health` 已通过 PR #7 合并；`dev@801c4a1` 的 CI run `39425381720` 通过；
+5. `/api/health` 已通过 PR #7 合并；阶段 2 计划 PR #10 的 CI 已通过；
 6. 阶段 2 开始前把 `quality` 设为 `dev` 的必需状态检查；
-7. 阶段 1 已正式验收，按阶段 2 计划（待提交）推进。
+7. 阶段 2 计划已合入；先领取 [#24 P2-INFRA-01](https://github.com/x-1784/AI-project/issues/24)，再按 [#22 总览](https://github.com/x-1784/AI-project/issues/22) 领取 #16/#17/#18/#19。
 
 ---
 
