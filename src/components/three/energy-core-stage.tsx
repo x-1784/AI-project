@@ -25,15 +25,24 @@ type Mode = "pending" | "full" | "compact" | "reduced" | "fallback";
 const NARROW_QUERY = "(max-width: 767px)";
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
+/**
+ * 探测 WebGL 是否可用。
+ *
+ * 建出来的 context 必须主动丢掉：浏览器对同时存在的 WebGL context 数量
+ * 有上限，探测用的这个若留着等垃圾回收，会让真正要渲染的那个更容易被
+ * 丢弃。WEBGL_lose_context 扩展就是给这种场景用的。
+ */
 function probeWebGL(): boolean {
+  let context: WebGLRenderingContext | WebGL2RenderingContext | null = null;
   try {
+    if (!window.WebGLRenderingContext) return false;
     const canvas = document.createElement("canvas");
-    return Boolean(
-      window.WebGLRenderingContext &&
-      (canvas.getContext("webgl2") || canvas.getContext("webgl")),
-    );
+    context = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
+    return Boolean(context);
   } catch {
     return false;
+  } finally {
+    context?.getExtension("WEBGL_lose_context")?.loseContext();
   }
 }
 

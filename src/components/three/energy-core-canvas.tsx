@@ -247,6 +247,19 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       alpha: true,
       powerPreference: "high-performance",
     });
+
+    /*
+     * 显示尺寸交给 CSS，不要交给 canvas 的 width/height 属性。
+     *
+     * <canvas> 是替换元素：CSS width 为 auto 时会用 width 属性（它反映的是
+     * backing store，已乘以 DPR）作为内在尺寸。也就是说 setSize(w, h, false)
+     * 之后，DPR 直接变成了显示放大倍数——1440@2x 下画布会宽出一倍并被
+     * overflow-hidden 裁掉，核心只剩左上角一块。
+     * 固定成 100% 后，显示尺寸永远等于容器，与 DPR 无关。
+     */
+    renderer.domElement.style.display = "block";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
     renderer.setClearColor(0x000000, 0);
     host.appendChild(renderer.domElement);
 
@@ -405,6 +418,9 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       if (!w || !h) return;
       dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), preset.maxDpr);
       renderer.setPixelRatio(dpr);
+      /* 第三个参数 false = 不写 canvas 的 style。显示尺寸已由上面的
+         100% / 100% 固定，这里只改 backing store，避免每次 resize 都
+         往 DOM 上写一次像素值。 */
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
@@ -447,6 +463,10 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
 
     const start = () => {
       if (running || !preset.animate) return;
+      /* 后台标签页里打开时不要开始排队：loop 会每帧重新调度、再在
+         isPaused() 处立刻返回，等于白占一个 rAF 槽位，直到第一次
+         visibilitychange 才真正停下来。 */
+      if (isPaused()) return;
       running = true;
       last = performance.now();
       raf = requestAnimationFrame(loop);
@@ -508,6 +528,11 @@ export function EnergyCoreCanvas({ intensity, interactive }: Props) {
       ringMats.forEach((m) => m.dispose());
 
       renderer.dispose();
+      /* dispose() 只释放 three 自己持有的 GPU 资源，WebGL context 本身要等
+         垃圾回收。档位切换会整块重建场景（跨 768px 或改动态偏好都触发），
+         频繁切换时残留的 context 会堆积并撞上浏览器的 context 上限，
+         所以显式丢掉。 */
+      renderer.forceContextLoss();
       renderer.domElement.remove();
     };
   }, [intensity, interactive]);
